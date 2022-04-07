@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="CentOS7部署_Php8.x(编译)"><meta name="keywords" content="php"><meta name="author" content="YuiKuen.Yuen"><meta name="copyright" content="YuiKuen.Yuen"><title>CentOS7部署_Php8.x(编译) | Mr.Yuen'Blog</title><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/favicon.png"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1359876433997feef3afed2ab6c5b39c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.1.0'
+} </script><meta name="generator" content="Hexo 6.1.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220407100042.png"></div><div class="author-info__name text-center">YuiKuen.Yuen</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/yuikuen">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">128</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">55</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">26</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://molunerfinn.com">Molunerfinn</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Mr.Yuen'Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">CentOS7部署_Php8.x(编译)</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-04-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/lanmp/">lanmp</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1.1k</span><span class="post-meta__separator">|</span><span>Reading time: 6 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>1）安装依赖工具(一般使用下述命令即可，如不成功请按提示升级相关工具库，否则会提示编译失败)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum -y install libtool automake libzip-devel epel-release libxml2 libxml2-devel openssl openssl-devel curl-devel libjpeg-devel libpng-devel freetype-devel libmcrypt-devel uuid libuuid-devel gcc bzip2 bzip2-devel gmp-devel readline-devel libxslt-devel autoconf bison gcc gcc-c++ sqlite-devel cmake</span><br></pre></td></tr></table></figure>
+
+<p><strong>下载安装 CMake</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220212160831028.png" alt="image-20220212160831028"></p>
+<blockquote>
+<p>CMake Error at CMakeLists.txt:1 (cmake_minimum_required):<br>  CMake 3.0.2 or higher is required.  You are running version 2.8.12.2</p>
+</blockquote>
+<p>卸载旧版本再下载新版本安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum remove cmake -y</span><br><span class="line">$ wget https://cmake.org/files/v3.22/cmake-3.22.1.tar.gz</span><br><span class="line">$ tar -zxvf cmake-3.22.1.tar.gz &amp;&amp; <span class="built_in">cd</span> cmake-3.22.1</span><br><span class="line">$ ./bootstrap</span><br><span class="line">$ gmake &amp;&amp; gmake install</span><br><span class="line">$ <span class="built_in">ln</span> -s /usr/local/bin/cmake /usr/bin/</span><br></pre></td></tr></table></figure>
+
+<p><strong>下载安装 oniguruma</strong></p>
+<blockquote>
+<p>No package oniguruma-devel available.<br>configure: error: Package requirements (oniguruma) were not met:<br>No package ‘oniguruma’ found</p>
+</blockquote>
+<ul>
+<li>方法一：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum -y install http://mirror.centos.org/centos-7/7.9.2009/cloud/x86_64/openstack-queens/Packages/o/oniguruma-6.7.0-1.el7.x86_64.rpm</span><br><span class="line">$ yum -y install http://mirror.centos.org/centos-7/7.9.2009/cloud/x86_64/openstack-queens/Packages/o/oniguruma-devel-6.7.0-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>方法二：(方法一下载较慢时可选择编译安装)</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220212154256608.png" alt="image-20220212154256608"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://github.com/kkos/oniguruma/archive/refs/tags/v6.9.7.1.tar.gz</span><br><span class="line">$ tar -xf v6.9.7.1.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> oniguruma-6.9.7.1</span><br><span class="line">$ ./autogen.sh</span><br><span class="line">$ ./configure \</span><br><span class="line">--bindir=/usr/sbin/ \</span><br><span class="line">--sbindir=/usr/sbin/ \</span><br><span class="line">--libexecdir=/usr/libexec \</span><br><span class="line">--sysconfdir=/etc/ \</span><br><span class="line">--localstatedir=/var \</span><br><span class="line">--libdir=/usr/lib64/  \</span><br><span class="line">--includedir=/usr/include/ \</span><br><span class="line">--datarootdir=/usr/share \</span><br><span class="line">--infodir=/usr/share/info \</span><br><span class="line">--localedir=/usr/share/locale \</span><br><span class="line">--mandir=/usr/share/man/ \</span><br><span class="line">--docdir=/usr/share/doc/onig</span><br><span class="line"></span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<p><strong>下载安装 libzip</strong></p>
+<blockquote>
+<p>checking for libzip &gt;&#x3D; 0.11 libzip !&#x3D; 1.3.1 libzip !&#x3D; 1.7.0… no<br>configure: error: Package requirements (libzip &gt;&#x3D; 0.11 libzip !&#x3D; 1.3.1 libzip !&#x3D; 1.7.0) were not met:</p>
+<p>Requested ‘libzip &gt;&#x3D; 0.11’ but version of libzip is 0.10.1</p>
+</blockquote>
+<p>卸载旧版本再下载新版本安装</p>
+<ul>
+<li>方法一：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220212160445815.png" alt="image-20220212160445815"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum remove libzip -y</span><br><span class="line">$ wget https://libzip.org/download/libzip-1.8.0.tar.gz</span><br><span class="line">$ tar -zxvf libzip-1.8.0.tar.gz &amp;&amp; <span class="built_in">cd</span> libzip-1.8.0</span><br><span class="line">$ <span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build \</span><br><span class="line">&amp;&amp; cmake -DCMAKE_INSTALL_PREFIX=/usr .. \</span><br><span class="line">&amp;&amp; make \</span><br><span class="line">&amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>方法二：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum remove libzip -y</span><br><span class="line">$ rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm </span><br><span class="line">$ yum —enablerepo=remi install libzip5-devel </span><br></pre></td></tr></table></figure>
+
+<p>2）下载安装 Php8.x</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://www.php.net/distributions/php-8.1.2.tar.gz</span><br><span class="line">$ tar -xf php-8.1.2.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> php-8.1.2</span><br><span class="line">$ ./configure \</span><br><span class="line">--prefix=/usr/local/php/ \</span><br><span class="line">--with-config-file-path=/usr/local/php/etc \</span><br><span class="line">--with-config-file-scan-dir=/usr/local/php/etc/conf.d \</span><br><span class="line">--enable-fpm \</span><br><span class="line">--enable-soap \</span><br><span class="line">--with-openssl \</span><br><span class="line">--with-openssl-dir \</span><br><span class="line">--with-zlib \</span><br><span class="line">--with-iconv \</span><br><span class="line">--with-bz2 \</span><br><span class="line">--enable-gd \</span><br><span class="line">--with-jpeg \</span><br><span class="line">--with-freetype \</span><br><span class="line">--with-curl \</span><br><span class="line">--enable-dom \</span><br><span class="line">--enable-xml \</span><br><span class="line">--with-zip \</span><br><span class="line">--enable-mbstring \</span><br><span class="line">--enable-pdo \</span><br><span class="line">--with-pdo-mysql \</span><br><span class="line">--with-zlib-dir \</span><br><span class="line">--enable-session \</span><br><span class="line">--enable-shmop \</span><br><span class="line">--enable-simplexml \</span><br><span class="line">--enable-sockets \</span><br><span class="line">--enable-sysvmsg \</span><br><span class="line">--enable-sysvsem \</span><br><span class="line">--enable-sysvshm \</span><br><span class="line">--with-xsl \</span><br><span class="line">--enable-mysqlnd \</span><br><span class="line">--with-mysqli \</span><br><span class="line">--without-pear \</span><br><span class="line">--disable-short-tags</span><br><span class="line"></span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<p>3）创建配置文件</p>
+<ul>
+<li>复制相关配置文件到 php 安装路径</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cp</span> /usr/local/src/php-8.1.2/sapi/fpm/init.d.php-fpm /usr/local/php/</span><br><span class="line">$ <span class="built_in">cp</span> /usr/local/src/php-8.1.2/php.ini-production /usr/local/php/etc/php.ini</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建 php-fpm.conf 配置文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/local/php/etc</span><br><span class="line">$ <span class="built_in">cp</span> php-fpm.conf.default php-fpm.conf &amp;&amp; ll</span><br><span class="line">-rw-r--r-- 1 root root  5376 Feb 12 17:04 php-fpm.conf</span><br><span class="line">-rw-r--r-- 1 root root  5376 Feb 12 16:54 php-fpm.conf.default</span><br><span class="line">drwxr-xr-x 2 root root    30 Feb 12 16:54 php-fpm.d</span><br><span class="line">-rw-r--r-- 1 root root 72908 Feb 12 17:04 php.ini</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> /usr/local/php/etc/php-fpm.d</span><br><span class="line">$ <span class="built_in">cp</span> www.conf.default www.conf &amp;&amp; ll</span><br><span class="line">-rw-r--r-- 1 root root 20886 Feb 12 17:05 www.conf</span><br><span class="line">-rw-r--r-- 1 root root 20886 Feb 12 16:54 www.conf.default</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动 php-fpm 测试启动脚本</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/local/php</span><br><span class="line">$ bash init.d.php-fpm start</span><br><span class="line">Starting php-fpm  <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>4）创建开机自启服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim /etc/systemd/system/php-fpm.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=php-fpm</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/local/php/sbin/php-fpm</span><br><span class="line">PrivateTmp=True</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>因之前已启动过 php-fpm，现 9000 端口被占用无法启动服务，杀死进程再启动服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ netstat -lntup | grep 9000</span><br><span class="line">tcp        0      0 127.0.0.1:9000          0.0.0.0:*               LISTEN      29921/php-fpm: mast</span><br><span class="line"></span><br><span class="line">$ killall php-fpm</span><br><span class="line">$ systemctl <span class="built_in">enable</span> --now php-fpm.service</span><br><span class="line">$ systemctl status php-fpm</span><br><span class="line">● php-fpm.service - php-fpm</span><br><span class="line">   Loaded: loaded (/etc/systemd/system/php-fpm.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Sat 2022-02-12 17:08:09 CST; 5s ago</span><br><span class="line">  Process: 29998 ExecStart=/usr/local/php/sbin/php-fpm (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 29999 (php-fpm)</span><br><span class="line">   CGroup: /system.slice/php-fpm.service</span><br><span class="line">           ├─29999 php-fpm: master process (/usr/local/php/etc/php-fpm.conf)</span><br><span class="line">           ├─30000 php-fpm: pool www</span><br><span class="line">           └─30001 php-fpm: pool www</span><br><span class="line"></span><br><span class="line">Feb 12 17:08:09 nextcloud systemd[1]: Starting php-fpm...</span><br><span class="line">Feb 12 17:08:09 nextcloud systemd[1]: Started php-fpm.</span><br></pre></td></tr></table></figure>
+
+<p>5）配置环境变量</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim /etc/profile</span><br><span class="line"><span class="comment"># php</span></span><br><span class="line"><span class="built_in">export</span> PHP_HOME=/usr/local/php</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$PHP_HOME</span>/bin</span><br><span class="line">$ <span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查php-fpm是否正常安装</span></span><br><span class="line">$ php -v</span><br><span class="line">PHP 8.1.2 (cli) (built: Feb 12 2022 16:54:09) (NTS)</span><br><span class="line">Copyright (c) The PHP Group</span><br><span class="line">Zend Engine v4.1.2, Copyright (c) Zend Technologies</span><br></pre></td></tr></table></figure>
+
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/07/php/centos7部署_Php8.x(编译)/">https://blog.yuikuen.top/2022/04/07/php/centos7部署_Php8.x(编译)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/php/">php</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/postgresql/centos7%E9%83%A8%E7%BD%B2_PostgreSQL12/"><i class="fa fa-chevron-left">  </i><span>centos7部署_PostgreSQL12</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/operator/operator%E9%83%A8%E7%BD%B2_Redis-Cluster/"><span>Operator部署_Redis-Cluster</span><i class="fa fa-chevron-right"></i></a></div></nav><div class="post-adv"><a target="_blank" rel="noopener" href="https://www.vultr.com/"><img src="https://www.vultr.com/media/banner_1.png" width="728" height="90"></a></div><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = 'false' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'51vOu1zj5thMsDwfiYj0Gr34-gzGzoHsz',
+  appKey:'XPMz9Uun0aSLDkHrDVAlmy8Q',
+  placeholder:'Please enter your opinion',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 - 2022 By YuiKuen.Yuen</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://blog.yuikuen.top/">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

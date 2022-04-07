@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="CentOS7部署_NFS服务器"><meta name="keywords" content="nfs"><meta name="author" content="YuiKuen.Yuen"><meta name="copyright" content="YuiKuen.Yuen"><title>CentOS7部署_NFS服务器 | Mr.Yuen'Blog</title><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/favicon.png"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1359876433997feef3afed2ab6c5b39c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.1.0'
+} </script><meta name="generator" content="Hexo 6.1.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-number">1.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">2.</span> <span class="toc-text">客户端</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220407100042.png"></div><div class="author-info__name text-center">YuiKuen.Yuen</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/yuikuen">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">128</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">55</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">26</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://molunerfinn.com">Molunerfinn</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Mr.Yuen'Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">CentOS7部署_NFS服务器</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-04-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/nfs/">nfs</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">623</span><span class="post-meta__separator">|</span><span>Reading time: 2 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>版本环境：</p>
+<ul>
+<li><p>硬件系统：ESXI 6.7.0 Update 1 </p>
+</li>
+<li><p>系统版本：CentOS 7.9</p>
+</li>
+</ul>
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p>1）配置环境</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 停止并禁用防火墙</span></span><br><span class="line">$ systemctl stop firewalld</span><br><span class="line">$ systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭并禁用 SELinux</span></span><br><span class="line">$ setenforce 0</span><br><span class="line">$ sed -i <span class="string">&#x27;s/^SELINUX=enforcing$/SELINUX=disabled/&#x27;</span> /etc/selinux/config</span><br></pre></td></tr></table></figure>
+
+<p>2）安装服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum install -y nfs-utils rpcbind</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建文件夹</span></span><br><span class="line">$ <span class="built_in">mkdir</span> /nfs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更改归属组与用户</span></span><br><span class="line">$ <span class="built_in">chown</span> -R nfsnobody:nfsnobody /nfs</span><br></pre></td></tr></table></figure>
+
+<p>3）配置 NFS</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 编辑exports</span></span><br><span class="line">$ vi /etc/exports</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入以下内容(格式：FS共享的目录 NFS客户端地址1(参数1,参数2,...) 客户端地址2(参数1,参数2,...))</span></span><br><span class="line">$ /nfs 188.188.4.0/24(rw,async,no_root_squash)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果设置为 &#x2F;nfs *(rw,async,no_root_squash) 则对所以的IP都有效</p>
+</blockquote>
+<ul>
+<li>常用选项：<ul>
+<li>ro：客户端挂载后，其权限为只读，默认选项；</li>
+<li>rw:读写权限；</li>
+<li>sync：同时将数据写入到内存与硬盘中；</li>
+<li>async：异步，优先将数据保存到内存，然后再写入硬盘；</li>
+<li>Secure：要求请求源的端口小于1024</li>
+</ul>
+</li>
+<li>用户映射：<ul>
+<li>root_squash:当NFS客户端使用root用户访问时，映射到NFS服务器的匿名用户；</li>
+<li>no_root_squash:当NFS客户端使用root用户访问时，映射到NFS服务器的root用户；</li>
+<li>all_squash:全部用户都映射为服务器端的匿名用户；</li>
+<li>anonuid&#x3D;UID：将客户端登录用户映射为此处指定的用户uid；</li>
+<li>anongid&#x3D;GID：将客户端登录用户映射为此处指定的用户gid</li>
+</ul>
+</li>
+</ul>
+<p>4）设置自启动</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ systemctl restart rpcbind</span><br><span class="line">$ systemctl <span class="built_in">enable</span> nfs &amp;&amp; systemctl restart nfs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看是否有可用的NFS地址</span></span><br><span class="line">$ showmount -e 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><p>1）安装服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum install -y nfs-utils rpcbind</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建挂载的文件夹，并挂载 nfs</span></span><br><span class="line">$ <span class="built_in">mkdir</span> -p /nfs-data</span><br><span class="line">$ mount -t nfs -o nolock,vers=4 188.188.4.161:/nfs /nfs-data</span><br><span class="line">$ systemctl <span class="built_in">enable</span> nfs &amp;&amp; systemctl restart nfs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机自挂载</span></span><br><span class="line">vim /etc/rc.d/rc.local</span><br><span class="line"><span class="comment">#在文件最后添加一行：</span></span><br><span class="line">mount -t nfs -o nolock,vers=4 188.188.4.161:/nfs /nfs-data</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数解释：<ul>
+<li>mount：挂载命令</li>
+<li>-o：挂载选项</li>
+<li>nfs :使用的协议</li>
+<li>nolock :不阻塞</li>
+<li>vers : 使用的NFS版本号</li>
+<li>IP : NFS服务器的IP（NFS服务器运行在哪个系统上，就是哪个系统的IP）</li>
+<li>&#x2F;nfs: 要挂载的目录（Ubuntu的目录）</li>
+<li>&#x2F;nfs-data : 要挂载到的目录（开发板上的目录，注意挂载成功后，&#x2F;mnt下原有数据将会被隐藏，无法找到）</li>
+</ul>
+</li>
+</ul>
+<p>2）查看状态</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">df</span> -h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看nfs服务端信息</span></span><br><span class="line">$ nfsstat -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看nfs客户端信息</span></span><br><span class="line">$ nfsstat -c</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>卸载挂载</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ umount /nfs-data</span><br></pre></td></tr></table></figure>
+
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/07/nfs/centos7部署_NFS服务器/">https://blog.yuikuen.top/2022/04/07/nfs/centos7部署_NFS服务器/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/nfs/">nfs</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/nginx/centos7%E9%83%A8%E7%BD%B2_Nginx(%E7%BC%96%E8%AF%91)/"><i class="fa fa-chevron-left">  </i><span>CentOS7部署_Nginx(编译)</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/nexus/centos7%E9%83%A8%E7%BD%B2_Nexus2.x/"><span>CentOS7部署_Nexus2.x</span><i class="fa fa-chevron-right"></i></a></div></nav><div class="post-adv"><a target="_blank" rel="noopener" href="https://www.vultr.com/"><img src="https://www.vultr.com/media/banner_1.png" width="728" height="90"></a></div><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = 'false' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'51vOu1zj5thMsDwfiYj0Gr34-gzGzoHsz',
+  appKey:'XPMz9Uun0aSLDkHrDVAlmy8Q',
+  placeholder:'Please enter your opinion',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 - 2022 By YuiKuen.Yuen</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://blog.yuikuen.top/">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="001_CentOS7-安装GitLab"><meta name="keywords" content="gitlab"><meta name="author" content="YuiKuen.Yuen"><meta name="copyright" content="YuiKuen.Yuen"><title>001_CentOS7-安装GitLab | Mr.Yuen'Blog</title><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/favicon.png"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1359876433997feef3afed2ab6c5b39c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.1.0'
+} </script><meta name="generator" content="Hexo 6.1.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">环境部署：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-GitLab"><span class="toc-number">2.</span> <span class="toc-text">安装 GitLab</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-GitLab"><span class="toc-number">3.</span> <span class="toc-text">配置 GitLab</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E7%8A%B6%E6%80%81"><span class="toc-number">4.</span> <span class="toc-text">验证状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F-amp-%E7%9B%AE%E5%BD%95"><span class="toc-number">5.</span> <span class="toc-text">程序&amp;目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">6.</span> <span class="toc-text">基本操作</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220407100042.png"></div><div class="author-info__name text-center">YuiKuen.Yuen</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/yuikuen">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">128</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">55</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">26</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://molunerfinn.com">Molunerfinn</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Mr.Yuen'Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">001_CentOS7-安装GitLab</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-04-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/learn/">learn</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1.2k</span><span class="post-meta__separator">|</span><span>Reading time: 5 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h3 id="环境部署："><a href="#环境部署：" class="headerlink" title="环境部署："></a>环境部署：</h3><ul>
+<li>系统环境：ESXi-6.7.0 + CentOS-7-x86_64-Minimal-2009</li>
+<li>安装版本：gitlab-ce-14.1.0</li>
+</ul>
+<blockquote>
+<p>开放对应服务，或直接关闭防火墙</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ systemctl disable --now firewalld</span><br><span class="line"></span><br><span class="line">$ firewall-cmd --add-service=ssh --permanent</span><br><span class="line">$ firewall-cmd --add-service=http --permanent</span><br><span class="line">$ firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>配置依赖环境</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ yum -y install policycoreutils openssh-server openssh-clients postfix</span><br><span class="line">$ systemctl enable --now sshd postfix</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-GitLab"><a href="#安装-GitLab" class="headerlink" title="安装 GitLab"></a>安装 GitLab</h3><p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220111165225877.png" alt="image-20220111165225877"></p>
+<ul>
+<li>方法一：配置源地址，再通过 Yum 在线安装</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat /etc/yum.repos.d/gitlab-ce.repo</span><br><span class="line">[gitlab-ce]</span><br><span class="line">name=gitlab-ce</span><br><span class="line">baseurl=http://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=https://packages.gitlab.com/gpg.key</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ yum -y install gitlab-ce-14.1.0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法二：下载 Rpm 文件，再直接离线安装</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-14.1.0-ce.0.el7.x86_64.rpm</span><br><span class="line">$ rpm -ivh gitlab-ce-14.1.0-ce.0.el7.x86_64.rpm --force --nodeps</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-GitLab"><a href="#配置-GitLab" class="headerlink" title="配置 GitLab"></a>配置 GitLab</h3><p>修改 <code>/etc/gitlab/gitlab.rb</code> 配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## GitLab URL 可为域名或本机IP</span><br><span class="line">external_url &#x27;http://yk-gitlab.net&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>邮箱配置 (非必要，自先选择)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">### GitLab email server settings</span><br><span class="line">gitlab_rails[&#x27;smtp_enable&#x27;] = true</span><br><span class="line">gitlab_rails[&#x27;smtp_address&#x27;] = &quot;smtp.qq.com&quot;           //邮件服务</span><br><span class="line">gitlab_rails[&#x27;smtp_port&#x27;] = 465                        //465默认开启smtp_tls</span><br><span class="line">gitlab_rails[&#x27;smtp_user_name&#x27;] = &quot;sinath@vip.qq.com&quot;   //发件人地址</span><br><span class="line">gitlab_rails[&#x27;smtp_password&#x27;] = &quot;****************&quot;     //邮箱授权码(自行百度)</span><br><span class="line">gitlab_rails[&#x27;smtp_domain&#x27;] = &quot;qq.com&quot;</span><br><span class="line">gitlab_rails[&#x27;smtp_authentication&#x27;] = &quot;login&quot;</span><br><span class="line">gitlab_rails[&#x27;smtp_enable_starttls_auto&#x27;] = true</span><br><span class="line">gitlab_rails[&#x27;smtp_tls&#x27;] = true</span><br><span class="line">gitlab_rails[&#x27;smtp_pool&#x27;] = false</span><br><span class="line"></span><br><span class="line">### Email Settings</span><br><span class="line">gitlab_rails[&#x27;gitlab_email_enabled&#x27;] = true</span><br><span class="line">gitlab_rails[&#x27;gitlab_email_from&#x27;] = &#x27;sinath@vip.qq.com&#x27; //发件人邮箱</span><br><span class="line">gitlab_rails[&#x27;gitlab_email_display_name&#x27;] = &#x27;sinath&#x27;    //发件人名称</span><br><span class="line">user[&#x27;git_user_email&#x27;] = &quot;sinath@vip.qq.com&quot;            //同上</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>初始化服务，修改配置后需要执行命令初始化并重启</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ gitlab-ctl reconfigure</span><br><span class="line">$ gitlab-ctl restart</span><br></pre></td></tr></table></figure>
+
+<p>正常输出日志代表部署成功，初始管理员用户为 <strong>root</strong>，密码在安装过程中已随机生成并保存在 <code>/etc/gitlab/initial_root_password</code>中，有效期 24 小时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Running handlers:</span><br><span class="line">Running handlers complete</span><br><span class="line">Chef Infra Client finished, 572/1520 resources updated in 04 minutes 16 seconds</span><br><span class="line"></span><br><span class="line">Notes:</span><br><span class="line">Default admin account has been configured with following details:</span><br><span class="line">Username: root</span><br><span class="line">Password: You didn&#x27;t opt-in to print initial root password to STDOUT.</span><br><span class="line">Password stored to /etc/gitlab/initial_root_password. This file will be cleaned up in first reconfigure run after 24 hours.</span><br><span class="line"></span><br><span class="line">NOTE: Because these credentials might be present in your log files in plain text, it is highly recommended to reset the password following https://docs.gitlab.com/ee/security/reset_user_password.html#reset-your-root-password.</span><br><span class="line"></span><br><span class="line">gitlab Reconfigured!</span><br><span class="line"></span><br><span class="line">$ cat /etc/gitlab/initial_root_password</span><br><span class="line"># WARNING: This value is valid only in the following conditions</span><br><span class="line">#          1. If provided manually (either via `GITLAB_ROOT_PASSWORD` environment variable or via `gitlab_rails[&#x27;initial_root_password&#x27;]` setting in `gitlab.rb`, it was provided before database was seeded for the first time (usually, the first reconfigure run).</span><br><span class="line">#          2. Password hasn&#x27;t been changed manually, either via UI or via command line.</span><br><span class="line">#</span><br><span class="line">#          If the password shown here doesn&#x27;t work, you must reset the admin password following https://docs.gitlab.com/ee/security/reset_user_password.html#reset-your-root-password.</span><br><span class="line"></span><br><span class="line">Password: d5WxYmXvXbEOfpzm/LZ6Bibmc+HzNTGpjNQU/3hdbh0=</span><br><span class="line"></span><br><span class="line"># NOTE: This file will be automatically deleted in the first reconfigure run after 24 hours.</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证状态"><a href="#验证状态" class="headerlink" title="验证状态"></a>验证状态</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ gitlab-ctl status</span><br><span class="line">down: alertmanager: 0s, normally up, want up; run: log: (pid 3505) 5177s</span><br><span class="line">run: gitaly: (pid 4357) 5105s; run: log: (pid 2680) 5280s</span><br><span class="line">run: gitlab-exporter: (pid 4366) 5105s; run: log: (pid 3264) 5194s</span><br><span class="line">run: gitlab-workhorse: (pid 4322) 5106s; run: log: (pid 3113) 5214s</span><br><span class="line">run: grafana: (pid 4579) 5094s; run: log: (pid 4120) 5123s</span><br><span class="line">run: logrotate: (pid 4252) 1693s; run: log: (pid 2576) 5292s</span><br><span class="line">run: nginx: (pid 3158) 5210s; run: log: (pid 3176) 5207s</span><br><span class="line">run: node-exporter: (pid 4334) 5106s; run: log: (pid 3228) 5200s</span><br><span class="line">run: postgres-exporter: (pid 4572) 5094s; run: log: (pid 3716) 5159s</span><br><span class="line">run: postgresql: (pid 2827) 5274s; run: log: (pid 2848) 5271s</span><br><span class="line">run: prometheus: (pid 4383) 5104s; run: log: (pid 3463) 5182s</span><br><span class="line">run: puma: (pid 3025) 5228s; run: log: (pid 3036) 5225s</span><br><span class="line">run: redis: (pid 2609) 5287s; run: log: (pid 2617) 5286s</span><br><span class="line">run: redis-exporter: (pid 4368) 5105s; run: log: (pid 3359) 5188s</span><br><span class="line">run: sidekiq: (pid 3053) 5222s; run: log: (pid 3067) 5219s</span><br><span class="line"></span><br><span class="line">$ lsof -i:80</span><br><span class="line">COMMAND  PID       USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">nginx   3158       root    7u  IPv4  28763      0t0  TCP *:http (LISTEN)</span><br><span class="line">nginx   3159 gitlab-www    7u  IPv4  28763      0t0  TCP *:http (LISTEN)</span><br><span class="line">nginx   3160 gitlab-www    7u  IPv4  28763      0t0  TCP *:http (LISTEN)</span><br><span class="line">nginx   3161 gitlab-www    7u  IPv4  28763      0t0  TCP *:http (LISTEN)</span><br><span class="line">nginx   3162 gitlab-www    7u  IPv4  28763      0t0  TCP *:http (LISTEN)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220111183425464.png" alt="image-20220111183425464"></p>
+<h3 id="程序-amp-目录"><a href="#程序-amp-目录" class="headerlink" title="程序&amp;目录"></a>程序&amp;目录</h3><p>GitLab由主要由以下服务构成，他们共同承担了Gitlab的运作需要</p>
+<ul>
+<li>nginx: 静态web服务器</li>
+<li>gitlab-shell: 用于处理Git命令和修改authorized keys列表</li>
+<li>gitlab-workhorse: 轻量级的反向代理服务器</li>
+<li>logrotate：日志文件管理工具</li>
+<li>postgresql：数据库</li>
+<li>redis：缓存数据库</li>
+<li>sidekiq：用于在后台执行队列任务（异步执行）</li>
+<li>unicorn：HTTP服务，GitLab Rails应用是托管在这个服务器上面的</li>
+</ul>
+<p>主要程序目录</p>
+<ul>
+<li>主配置文件: &#x2F;etc&#x2F;gitlab&#x2F;gitlab.rb</li>
+<li>文档根目录: &#x2F;opt&#x2F;gitlab</li>
+<li>默认存储库位置: &#x2F;var&#x2F;opt&#x2F;gitlab&#x2F;git-data&#x2F;repositories</li>
+<li>Nginx配置文件: &#x2F;var&#x2F;opt&#x2F;gitlab&#x2F;nginx&#x2F;conf&#x2F;gitlab-http.conf</li>
+<li>Postgresql数据目录: &#x2F;var&#x2F;opt&#x2F;gitlab&#x2F;postgresql&#x2F;data</li>
+</ul>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><ul>
+<li>控制台打开：gitlab-rails</li>
+<li>数据库命令：gitlab-psql</li>
+<li>数据备份还原：gitlab-rake</li>
+<li>客户端操作命令：gitlab-ctl<ul>
+<li>启动：gitlab-ctl start</li>
+<li>停止：gitlab-ctl stop</li>
+<li>重启：gitlab-ctl restart</li>
+<li>查看：gitlab-ctl status</li>
+<li>日志：gitlab-ctl tail nginx(组件)</li>
+</ul>
+</li>
+</ul>
+<p><strong>参考文献</strong></p>
+<p><a target="_blank" rel="noopener" href="https://about.gitlab.com/install/#already-installed">Install self-managed GitLab</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kJ411p7mV?from=search&seid=16079250692279453903&spm_id_from=333.337.0.0">黑马程序员Java教程自动化部署Jenkins从环境配置到项目开发</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/07/learn/001黑马自动化部署Jenkins从环境配置到项目开发/001_CentOS7-安装GitLab/">https://blog.yuikuen.top/2022/04/07/learn/001黑马自动化部署Jenkins从环境配置到项目开发/001_CentOS7-安装GitLab/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/gitlab/">gitlab</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/learn/001%E9%BB%91%E9%A9%AC%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2Jenkins%E4%BB%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%88%B0%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/002_GitLab-%E6%B7%BB%E5%8A%A0%E7%BB%84&amp;%E7%94%A8%E6%88%B7%E5%8F%8A%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE/"><i class="fa fa-chevron-left">  </i><span>002_GitLab-添加组&amp;用户及创建项目</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/learn/000%E9%BB%91%E9%A9%ACLinux%E4%BA%91%E8%AE%A1%E7%AE%97+%E8%BF%90%E7%BB%B4%E5%BC%80%E5%8F%913.0/001_Linux%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%94%A8%E9%80%94/"><span>001_Linux 系统文件目录用途</span><i class="fa fa-chevron-right"></i></a></div></nav><div class="post-adv"><a target="_blank" rel="noopener" href="https://www.vultr.com/"><img src="https://www.vultr.com/media/banner_1.png" width="728" height="90"></a></div><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = 'false' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'51vOu1zj5thMsDwfiYj0Gr34-gzGzoHsz',
+  appKey:'XPMz9Uun0aSLDkHrDVAlmy8Q',
+  placeholder:'Please enter your opinion',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 - 2022 By YuiKuen.Yuen</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://blog.yuikuen.top/">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

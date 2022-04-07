@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="ArchLinux安装_i3桌面及配置"><meta name="keywords" content="i3wm"><meta name="author" content="YuiKuen.Yuen"><meta name="copyright" content="YuiKuen.Yuen"><title>ArchLinux安装_i3桌面及配置 | Mr.Yuen'Blog</title><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/favicon.png"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1359876433997feef3afed2ab6c5b39c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.1.0'
+} </script><meta name="generator" content="Hexo 6.1.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220407100042.png"></div><div class="author-info__name text-center">YuiKuen.Yuen</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/yuikuen">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">128</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">55</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">26</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://molunerfinn.com">Molunerfinn</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Mr.Yuen'Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">ArchLinux安装_i3桌面及配置</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-04-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/archlinx/">archlinx</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">2.5k</span><span class="post-meta__separator">|</span><span>Reading time: 11 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>首先通过安装介质启动到 live 环境，选第一个，以 root 身份进入一个虚拟控制台，默认 shell 为 zsh</p>
+<p><code>Arch Linux install medium (x86_64,UEFI)</code></p>
+<p>1）判断无线网卡是否被锁</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ rfkill list  </span><br><span class="line">--------------</span><br><span class="line">0: phy0: Wireless LAN</span><br><span class="line">    Soft blocked: <span class="built_in">yes</span></span><br><span class="line">    Hard blocked: <span class="built_in">yes</span></span><br><span class="line">//如果出现以上内容，可以调节网卡开关打开它。如果没有开关，那就使用以下命令：</span><br><span class="line">$ rfkill unblock wifi</span><br></pre></td></tr></table></figure>
+
+<p>2）连接网络</p>
+<p>方法一：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ip add</span><br><span class="line">$ ip <span class="built_in">link</span> <span class="built_in">set</span> wlan0 up</span><br><span class="line">$ iwctl </span><br><span class="line">[iwd]device list  //列出无线设备名称</span><br><span class="line">[iwd]station wlan0(&lt;device&gt;) scan  //扫描当前环境下的网络</span><br><span class="line">[iwd]station &lt;device&gt; get-networks  //会显示扫描到的所有网络</span><br><span class="line">[iwd]station &lt;device&gt; connect &lt;network name&gt;</span><br><span class="line">password</span><br><span class="line">[iwd]<span class="built_in">exit</span></span><br><span class="line">$ ping www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>方法二：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ip <span class="built_in">link</span> <span class="built_in">set</span> wlan0 up</span><br><span class="line">$ iwlist wlan0 scan | grep ESSID</span><br><span class="line">$ wpa_passphrase ESSID passwd &gt; internet.conf</span><br><span class="line">$ wpa_supplicant -c internet.conf -i wlan0 &amp;</span><br><span class="line">$ dhcpcd &amp;</span><br><span class="line">$ ping www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>3）停止 reflector 服务，禁止自动更新</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ systemctl stop reflector.service</span><br></pre></td></tr></table></figure>
+
+<p>4）同步网络时间</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ timedatectl set-ntp <span class="literal">true</span></span><br><span class="line">$ timedatectl status</span><br></pre></td></tr></table></figure>
+
+<p>5）更新为国内镜像源</p>
+<p>方法一：</p>
+<p>将中国源排在前列，中科大、清华</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure>
+
+<p>方法二：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ reflector --country China --age 72 --<span class="built_in">sort</span> rate --protocol https --save /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure>
+
+<p>6）通过ssh链接当前主机进行(可选)</p>
+<ol>
+<li>在当前安装环境下输入 <code>passwd</code>  为当前环境设置一个密码，不用太长，两三位就可以了。输入时不会显示。</li>
+<li>执行 <code>ip -brief address</code> 查看当前ip地址，一般是 192.168.&lt;…&gt;.&lt;…&gt; IP 地址后面斜杠之后的掩码位不用哦</li>
+<li>准备另外一台设备，应当使该设备与安装主机在同一局域网内，就是俩设备都连着同一个 WiFi</li>
+</ol>
+<p>几种设备的连接方式：</p>
+<p> Windows：在终端输入：<code>ssh -o StrictHostKeyChecking=no root@&lt;刚刚查看的IP地址&gt;</code></p>
+<p> Linux&amp;macOS：在终端输入：<code>ssh -o StrictHostKeyChecking=no root@&lt;刚刚查看的IP地址&gt;</code></p>
+<p>7）磁盘分区[仅供参考]</p>
+<p>方法一：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cfdisk /dev/sda</span><br><span class="line">EFI分区       300 MB</span><br><span class="line">swap分区      4GB</span><br><span class="line">root分区      剩余空间</span><br></pre></td></tr></table></figure>
+
+<p>方法二：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ fdisk /dev/sda</span><br><span class="line">g //创建gpt格式</span><br><span class="line">n //创建分区</span><br><span class="line">p //显示分区情况</span><br><span class="line">w //保存并退出</span><br><span class="line">EFI分区       300 MB</span><br><span class="line">swap分区      4GB</span><br><span class="line">root分区      剩余空间</span><br></pre></td></tr></table></figure>
+
+<p>8）格式化</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkfs.vfat /dev/sda1</span><br><span class="line">$ mkswap /dev/sda2</span><br><span class="line">$ swapon /dev/sda2</span><br><span class="line">$ mkfs.ext4 /dev/sda3</span><br></pre></td></tr></table></figure>
+
+<p>9）安装系统</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#挂载</span></span><br><span class="line">$ mount /dev/sda3 /mnt</span><br><span class="line">$ <span class="built_in">mkdir</span> /mnt/boot</span><br><span class="line">$ mount /dev/sda1 /mnt/boot</span><br><span class="line"></span><br><span class="line">$ pacstrap /mnt linux linux-firmware linux-headers base base-devel vi vim git bash-completion</span><br></pre></td></tr></table></figure>
+
+<p>10）生成系统表文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br><span class="line">$ <span class="built_in">cat</span> /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>11）进入新系统配置</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ arch-chroot /mnt</span><br><span class="line"></span><br><span class="line">//时区</span><br><span class="line">$ <span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">$ hwclock --systohc</span><br><span class="line"></span><br><span class="line">//系统语言</span><br><span class="line">$ vim /etc/locale.gen</span><br><span class="line"><span class="comment">#将以下两行取消注释</span></span><br><span class="line">en_US.UTF-8 UTF-8</span><br><span class="line">zh_CN.UTF-8 UTF-8</span><br><span class="line"></span><br><span class="line">//生成本地语言信息</span><br><span class="line">$ locale-gen</span><br><span class="line">//设置语言环境变量</span><br><span class="line">$ vim /etc/locale.conf</span><br><span class="line">LANG=en_US.UTF-8</span><br><span class="line"></span><br><span class="line">//主机名</span><br><span class="line">$ vim /etc/hostname</span><br><span class="line">archlinux</span><br><span class="line">//hosts</span><br><span class="line">$ vim /etc/hosts</span><br><span class="line">127.0.0.1   localhost</span><br><span class="line">::1         localhost</span><br><span class="line">127.0.1.1   archlinux.localdomain archlinux</span><br><span class="line"></span><br><span class="line">//安装相关包</span><br><span class="line">$ pacman -S grub efibootmgr efivar networkmanager intel-ucode</span><br><span class="line">$ pacman -S neovim dhcpcd zsh zsh-completions wpa_supplicant iwd sudo netctl</span><br></pre></td></tr></table></figure>
+
+<p>12）配置 grub</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ grub-install /dev/sda</span><br><span class="line">$ grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<p>13）激活启用 NetworkManager</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ systemctl <span class="built_in">enable</span> NetworkManager</span><br></pre></td></tr></table></figure>
+
+<p>14）设置 root 密码并重启</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ passwd</span><br><span class="line">$ <span class="built_in">exit</span></span><br><span class="line">$ umount /mnt/boot/efi</span><br><span class="line">$ umount /mnt</span><br><span class="line">$ reboot</span><br></pre></td></tr></table></figure>
+
+<p>15）联网</p>
+<p>方法一：</p>
+<blockquote>
+<p>输入 <code>nmtui</code> 选择 “Activate a connection” 回车进入，选择你需要的网络，连接后back返回即可</p>
+</blockquote>
+<p>方法二：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pacman -Syu wpa_supplicant dhcpcd netctl //确保已安装</span><br><span class="line">$ <span class="built_in">cd</span> /etc/netctl/examples  //找示例配置文件</span><br><span class="line">$ ip <span class="built_in">link</span> <span class="built_in">set</span> wlan0 up</span><br><span class="line">$ iwlist wlan0 scan | grep ESSID //记下无线网卡名称和wifi匹配名称</span><br><span class="line">$ <span class="built_in">cp</span> /etc/netctl/example/wireless-wpa /etc/netctl/somedescriptivename</span><br><span class="line">$ vim /etc/netctl/somedescriptivename  //配置ssid\passwd,注意使用权限<span class="built_in">chmod</span> 600禁止非root用户访问</span><br><span class="line">$ systemctl <span class="built_in">enable</span> netctl-auto@wlan0.service   //注意wifi名称</span><br><span class="line">$ dhcpcd &amp;</span><br><span class="line">$ ip add</span><br><span class="line">$ ping www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>注意事项：<br>当您进入接入点范围时，netctl 将自动连接到 <code>/etc/netctl</code> 中的任何配置文件<br>此设置仅适用于使用 Security&#x3D;wpa-configsection 和的配置文件 Security&#x3D;wpa。<br>禁用所有以前启用的 wifi 配置文件，netctl disable profilename 否则启用 netctl-auto 后，netctl 会在启动时将它们启动两次。</p>
+<p>16）开启 ssh 连接</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pacman -S openssh</span><br><span class="line">$ systemctl <span class="built_in">enable</span> sshd</span><br><span class="line">$ ip -brief address</span><br><span class="line"></span><br><span class="line">$ vim /etc/ssh/sshd_config</span><br><span class="line">--------------------------------------</span><br><span class="line"><span class="comment"># 将下列的语句值改为yes</span></span><br><span class="line">PermitRootLogin <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+
+<p>其他终端进行连接</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh -o StrictHostKeyChecking=no root@&lt;刚刚查看的IP地址&gt;</span><br></pre></td></tr></table></figure>
+
+<p>17）配置 base shell 环境变量</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim /etc/skel/.bashrc</span><br><span class="line">-------------------------------</span><br><span class="line"><span class="comment"># 在alias行上面添加</span></span><br><span class="line"><span class="built_in">export</span> EDITOR=vim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 继续添加</span></span><br><span class="line"><span class="built_in">alias</span> grep=<span class="string">&#x27;grep --color=auto&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> egrep=<span class="string">&#x27;egrep --color=auto&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> fgrep=<span class="string">&#x27;fgrep --color=auto&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在alias 之后添加脚本</span></span><br><span class="line">[ ! -e ~/.dircolors ] &amp;&amp; <span class="built_in">eval</span> $(<span class="built_in">dircolors</span> -p &gt; ~/.dircolors)</span><br><span class="line">[ -e /bin/dircolors ] &amp;&amp; <span class="built_in">eval</span> $(<span class="built_in">dircolors</span> -b ~/.dircolors)</span><br><span class="line"><span class="comment"># 保存退出</span></span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cp</span> /etc/skel/.bashrc ~</span><br></pre></td></tr></table></figure>
+
+<p>18）添加标准用户</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ useradd --create-home sinath</span><br><span class="line">$ passwd sinath</span><br><span class="line">$ usermod -aG wheel,<span class="built_in">users</span>,storage,power,lp,adm,optical sinath</span><br><span class="line">$ visudo</span><br><span class="line">//取消注释</span><br><span class="line">%wheel ALL=(ALL) ALL</span><br></pre></td></tr></table></figure>
+
+<p>19）添加 ArchlinuxCN 存储库</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim /etc/pacman.conf</span><br><span class="line">--------------------------------------</span><br><span class="line">把[multilib]这两行注释删除,再添加源</span><br><span class="line"><span class="comment"># 在最后添加</span></span><br><span class="line">[archlinuxcn]</span><br><span class="line">Server = https://mirrors.ustc.edu.cn/archlinuxcn/<span class="variable">$arch</span>   </span><br><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/<span class="variable">$arch</span></span><br><span class="line">$ pacman -Syy</span><br><span class="line">$ pacman -Syu &amp;&amp; pacman -S archlinuxcn-keyring</span><br></pre></td></tr></table></figure>
+
+<p><strong>注</strong> ： 如果以上更新密钥步骤出现错误，就是那种连着一串 ERROR 的情况，请执行以下步骤</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">rm</span> -rf /etc/pacman.c/gnupg</span><br><span class="line">$ pacman-key --init</span><br><span class="line">$ pacman-key --populate archlinux archlinuxcn</span><br><span class="line">$ pacman -Syy</span><br></pre></td></tr></table></figure>
+
+<p>20）显卡、声卡配置</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#检查显卡</span></span><br><span class="line">$ lspci | grep -e VGA -e 3D</span><br><span class="line"></span><br><span class="line"><span class="comment">#不同显卡驱动---核显不用安装(可略)</span></span><br><span class="line">$ sudo pacman -S nvidia nvidia-utils <span class="comment"># NVIDIA </span></span><br><span class="line">$ sudo pacman -S xf86-video-amdgpu   <span class="comment"># AMD</span></span><br><span class="line">$ sudo pacman -S xf86-video-intel    <span class="comment"># Intel</span></span><br><span class="line"></span><br><span class="line">$ pacman -S xf86-video-intel vulkan-intel mesa</span><br><span class="line">$ pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups</span><br></pre></td></tr></table></figure>
+
+<p>21）安装字体</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S adobe-source-code-pro-fonts adobe-source-han-serif-cn-fonts wqy-zenhei wqy-microhei noto-fonts-cjk noto-fonts-emoji noto-fonts-extra</span><br></pre></td></tr></table></figure>
+
+<p>打开字体引擎</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim /etc/profile.d/freetype2.sh</span><br><span class="line">--------------------------------------------</span><br><span class="line"><span class="comment"># 取消注释最后一句</span></span><br><span class="line"><span class="built_in">export</span> FREETYPE_PROPERTIES=<span class="string">&quot;truetype:interpreter-version=40&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>22）桌面环境</p>
+<ul>
+<li>安装 Display Server [开源]</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pacman -S xorg xorg-server xorg-xinit</span><br><span class="line">可选</span><br><span class="line">$ <span class="built_in">cp</span> /etc/X11/xinit/xinitrc ~/.xinitrc</span><br><span class="line">//注释<span class="comment">#twm &amp;以下内容</span></span><br><span class="line">最后添加</span><br><span class="line"><span class="built_in">exec</span> i3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装 Display Manager</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//Gnome</span><br><span class="line">$ pacman -S gdm</span><br><span class="line">//KDE</span><br><span class="line">$ pacman -S sddm</span><br><span class="line">//Xfce|DDE</span><br><span class="line">$ pacman -S lightdm lightdm-gtk-greeter</span><br></pre></td></tr></table></figure>
+
+<p>设置开机自启</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ systemctl <span class="built_in">enable</span> gdm</span><br><span class="line">//使用哪个就将gdm替换成安装的dm</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装i3</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pacman -S i3</span><br><span class="line">$ pacman -S i3-gaps i3blocks i3lock i3status //可选</span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim ~/.config/i3/config</span><br><span class="line">修改默认的mod快捷键，默认是windows键，改为Alt键</span><br><span class="line">把<span class="built_in">set</span> <span class="variable">$mod</span> Mod4改为<span class="built_in">set</span> <span class="variable">$mod</span> Mod1</span><br><span class="line"></span><br><span class="line">默认i3的快捷键冲突了，修改配置文件，搜索+d,注释掉第二个</span><br><span class="line">bindsym <span class="variable">$mod</span>+d <span class="built_in">exec</span> --no-startup dmenu run</span><br><span class="line">bindsym <span class="variable">$mod</span>+d <span class="built_in">exec</span> --no-startup-id i3-dmenu-desktop</span><br></pre></td></tr></table></figure>
+
+<p>23）软件</p>
+<ul>
+<li>输入法</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-configtool</span><br><span class="line">$ sudo vim ~/.pam_environment</span><br><span class="line"><span class="comment"># 添加以下内容</span></span><br><span class="line">INPUT_METHOD  DEFAULT=fcitx5</span><br><span class="line">GTK_IM_MODULE DEFAULT=fcitx5</span><br><span class="line">QT_IM_MODULE  DEFAULT=fcitx5</span><br><span class="line">XMODIFIERS    DEFAULT=<span class="string">&quot;@im=fcitx5&quot;</span></span><br><span class="line"><span class="comment"># 配置环境变量</span></span><br><span class="line">$ sudo vim ~/.xprofile</span><br><span class="line"><span class="built_in">export</span> GTK_IM_MODULE=fcitx5</span><br><span class="line"><span class="built_in">export</span> QT_IM_MODULE=fcitx5</span><br><span class="line"><span class="built_in">export</span> XMODIFIERS=@im=fcitx</span><br><span class="line">fcitx5 &amp;</span><br><span class="line"></span><br><span class="line">$ vim ~/.config/i3/config</span><br><span class="line"><span class="comment"># Autostart applictions</span></span><br><span class="line"><span class="built_in">exec</span> --no-startup-id fcitx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>仿终端</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S alacritty</span><br><span class="line">$ vim ~/.config/i3/config</span><br><span class="line"><span class="comment"># start a terminal 修改默认终端</span></span><br><span class="line">bindsym <span class="variable">$mod</span>+Return <span class="built_in">exec</span> alacritty</span><br><span class="line"></span><br><span class="line">$ alacritty --version</span><br><span class="line">$ sudo <span class="built_in">mkdir</span> ~/.config/alacritty</span><br><span class="line">$ <span class="built_in">cd</span> ~/.config/alacritty</span><br><span class="line">$ wget https://github.com/alacritty/alacritty/releases/download/v0.9.0/alacritty.yml</span><br><span class="line">$ vim alacritty.yml</span><br><span class="line">background_opacity: 0.8 //背景透明度</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>窗口透明</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S picom</span><br><span class="line">$ vim ~/.config/i3/config</span><br><span class="line">$ exec_always --no-startup-id picom -b</span><br><span class="line">$ <span class="built_in">cp</span> /etc/xdg/picom.conf .</span><br><span class="line">$ sudo vim ~/.config/picom.conf</span><br><span class="line"><span class="comment"># Opacity</span></span><br><span class="line">inactive-opacity = 0.7;</span><br><span class="line">active-opacity = 0.9;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>浏览器</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S firefox </span><br><span class="line">$ yay -S google-chrome</span><br><span class="line">$ vim ~/.config/i3/config</span><br><span class="line">bindsym <span class="variable">$mod</span>+F2 <span class="built_in">exec</span> google-chrome-stable</span><br><span class="line">bindsym <span class="variable">$mod</span>+F3 <span class="built_in">exec</span> firefox</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>压缩软件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S unrar unzip p7zip</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>文件管理器</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S pcmanfm  //图形文件管理器</span><br><span class="line">$ sudo pacman -S ranger   //命令行文件管理器</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>状态栏</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S polybar</span><br><span class="line">$ sudo <span class="built_in">mkdir</span> ~/.config/polybar</span><br><span class="line">$ <span class="built_in">cp</span> /usr/share/doc/polybar/config <span class="variable">$HOME</span>/.config/polybar/config</span><br><span class="line">$ sudo <span class="built_in">touch</span> <span class="variable">$HOME</span>/.config/polybar/config/launch.sh</span><br><span class="line">$ sudo <span class="built_in">chmod</span> +x launch.sh</span><br><span class="line">$ vim launch.sh</span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 终端可能已经有在运行的实例</span></span><br><span class="line">killall -q polybar</span><br><span class="line"><span class="comment"># 等待进程被终止</span></span><br><span class="line"><span class="keyword">while</span> pgrep -u <span class="variable">$UID</span> -x polybar &gt;/dev/null; <span class="keyword">do</span> <span class="built_in">sleep</span> 1; <span class="keyword">done</span></span><br><span class="line"><span class="comment"># 运行Polybar，使用默认的配置文件路径 ~/.config/polybar/config</span></span><br><span class="line">polybar mybar &amp;</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Polybar runing...&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>注释i3自带的bar或i3blocks配置使用polybar启动脚本启动polybar</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim ~/.config/i3/config</span><br><span class="line">//增加开机启动脚本</span><br><span class="line">exec_always --no-startup-id <span class="variable">$HOME</span>/.config/polybar/launch.sh</span><br><span class="line">//注释原bar</span><br><span class="line"><span class="comment">#bar &#123;</span></span><br><span class="line"><span class="comment">#	i3bar_command i3bar --transparency</span></span><br><span class="line"><span class="comment">#	status_command i3blocks</span></span><br><span class="line"><span class="comment">#	position top</span></span><br><span class="line"><span class="comment">#	colors &#123;</span></span><br><span class="line"><span class="comment">#		background #9370DB3F</span></span><br><span class="line"><span class="comment">#		separator #778899</span></span><br><span class="line"><span class="comment">#			# 使用RGBA颜色  #边界 背景 文本</span></span><br><span class="line"><span class="comment">#		focused_workspace  	#778899A5 #87CEEBA5 #FFFAFAF5</span></span><br><span class="line"><span class="comment">#		inactive_workspace 	#7788993F #AFEEEE3F #FFFAFAF5</span></span><br><span class="line"><span class="comment">#		urgent_workspace   	#80808072 #FF450072 #FFFAFAF5</span></span><br><span class="line"><span class="comment">#    &#125;</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>polybar配置参考</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim ~/.config/polybar/config</span><br><span class="line">[colors]</span><br><span class="line">background = <span class="comment">#b0222222  //修改背景透明</span></span><br><span class="line">[bar/mybar]             //修改成自身bar</span><br><span class="line">modules-right = alsa eth cpu memory <span class="built_in">date</span> bluetooth //状态栏显示字体</span><br><span class="line">[module/eth]            //有线/无线网卡名称</span><br><span class="line">interface = enp4s0f0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>rofi快捷启动(dmenu)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S rofi</span><br><span class="line">bindsym <span class="variable">$mod</span>+d <span class="built_in">exec</span> --no-startup-id rofi -show drun //(可选)</span><br><span class="line">bindsym <span class="variable">$mod</span>+space --release <span class="built_in">exec</span> <span class="string">&quot;rofi -combi-modi drun,window,ssh -show combi -modi combi&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>feh墙纸</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S feh</span><br><span class="line">$ <span class="built_in">mkdir</span> ~/Pictures/backgrounds  //壁纸保存路径</span><br><span class="line">$ <span class="built_in">ls</span> /usr/bin/feh</span><br><span class="line">$ <span class="built_in">mkdir</span> -p ~/.config/feh</span><br><span class="line">$ vim ~/.config/wallpic.sh</span><br><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span></span><br><span class="line">    find ~/Pictures/backgrounds/ -<span class="built_in">type</span> f \( -name <span class="string">&#x27;*.jpg&#x27;</span> -o -name <span class="string">&#x27;*.png&#x27;</span> \) -print0 |</span><br><span class="line">        <span class="built_in">shuf</span> -n1 -z | xargs -0 feh --bg-scale</span><br><span class="line">    <span class="built_in">sleep</span> 15m</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">$ <span class="built_in">chmod</span> +x wallpic.sh</span><br><span class="line"></span><br><span class="line">$ vim ~/.config/i3/config</span><br><span class="line"><span class="built_in">exec</span> --no-startup-id feh --randomize --big-fill ~/Pictures/backgrounds/*</span><br><span class="line">exec_always --no-startup-id <span class="variable">$HOME</span>/.config/feh/wallpic.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ohmyzsh终端</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#设置终端</span></span><br><span class="line">$ <span class="built_in">cat</span> /etc/shells      <span class="comment"># 查看系统所有shell</span></span><br><span class="line">$ chsh -s /usr/bin/zsh <span class="comment"># 更改默认shell为zsh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装ohmyzsh</span></span><br><span class="line">wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh</span><br><span class="line"><span class="comment"># 安装插件</span></span><br><span class="line"><span class="comment"># zsh-syntax-highlighting：语法高亮</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"><span class="comment"># autosuggestions：记住用过的命令</span></span><br><span class="line">git <span class="built_in">clone</span> git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改主题，这里使用的主题是powerlevel10k，详细信息可从Github找到</span></span><br><span class="line">$ git <span class="built_in">clone</span> --depth=1 https://github.com/romkatv/powerlevel10k.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/themes/powerlevel10k</span><br><span class="line"></span><br><span class="line">$ sudo vim ~/.zshrc                       <span class="comment"># 修改配置文件</span></span><br><span class="line">ZSH_THEME=<span class="string">&quot;powerlevel10k/powerlevel10k&quot;</span>   <span class="comment"># 更改ZSH_THEME</span></span><br><span class="line">plugins=(git                              <span class="comment"># 更改plugins</span></span><br><span class="line">       zsh-autosuggestions</span><br><span class="line">       zsh-syntax-highlighting</span><br><span class="line">       sudo</span><br><span class="line">       extract</span><br><span class="line">     )</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LC_ALL=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> LANG=EN_US.UTF-8</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">source</span> ~/.zshrc                         <span class="comment"># 刷新配置,打开终端按提示进行配置即可</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>截图软件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo pacman -S flameshot</span><br><span class="line">$ sudo vim ~/.config/i3/config</span><br><span class="line"><span class="comment"># 添加截图快捷方式</span></span><br><span class="line">bindsym Print --release <span class="built_in">exec</span> /usr/bin/flameshot gui</span><br><span class="line"><span class="comment">#for_window [class=&quot;flameshot&quot;] floating enable </span></span><br><span class="line"><span class="built_in">exec</span> --no-startup-id flameshot</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>i3配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#设置窗口边框等等</span></span><br><span class="line">new_window none</span><br><span class="line">new_float normal</span><br><span class="line">hide_edge_borders both</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置窗口间距</span></span><br><span class="line">gaps inner 8</span><br><span class="line">gaps outer 6</span><br><span class="line"></span><br><span class="line"><span class="comment"># screen before suspend. Use loginctl lock-session to lock your screen.</span></span><br><span class="line"><span class="built_in">exec</span> --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use pactl to adjust volume in PulseAudio.</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$refresh_i3status</span> killall -SIGUSR1 i3status</span><br><span class="line">bindsym XF86AudioRaiseVolume <span class="built_in">exec</span> --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% &amp;&amp; <span class="variable">$refresh_i3status</span></span><br><span class="line">bindsym XF86AudioLowerVolume <span class="built_in">exec</span> --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% &amp;&amp; <span class="variable">$refresh_i3status</span></span><br><span class="line">bindsym XF86AudioMute <span class="built_in">exec</span> --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle &amp;&amp; <span class="variable">$refresh_i3status</span></span><br><span class="line">bindsym XF86AudioMicMute <span class="built_in">exec</span> --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle &amp;&amp; <span class="variable">$refresh_i3status</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/07/archlinux/archlinux安装_i3桌面及配置/">https://blog.yuikuen.top/2022/04/07/archlinux/archlinux安装_i3桌面及配置/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/i3wm/">i3wm</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/centos/cenots7%E9%85%8D%E7%BD%AE_%E6%9C%AC%E5%9C%B0Repo%E4%BB%93%E5%BA%93/"><i class="fa fa-chevron-left">  </i><span>CentOS7配置_本地Repo仓库</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/tools/vscode%E9%85%8D%E7%BD%AE_springboot%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83/"><span>VsCode配置_SpringBoot项目环境</span><i class="fa fa-chevron-right"></i></a></div></nav><div class="post-adv"><a target="_blank" rel="noopener" href="https://www.vultr.com/"><img src="https://www.vultr.com/media/banner_1.png" width="728" height="90"></a></div><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = 'false' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'51vOu1zj5thMsDwfiYj0Gr34-gzGzoHsz',
+  appKey:'XPMz9Uun0aSLDkHrDVAlmy8Q',
+  placeholder:'Please enter your opinion',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 - 2022 By YuiKuen.Yuen</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://blog.yuikuen.top/">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

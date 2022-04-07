@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Shell脚本的经典十三问"><meta name="keywords" content="shell"><meta name="author" content="YuiKuen.Yuen"><meta name="copyright" content="YuiKuen.Yuen"><title>Shell脚本的经典十三问 | Mr.Yuen'Blog</title><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/favicon.png"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1359876433997feef3afed2ab6c5b39c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.1.0'
+} </script><meta name="generator" content="Hexo 6.1.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220407100042.png"></div><div class="author-info__name text-center">YuiKuen.Yuen</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/yuikuen">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">128</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">55</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">26</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://molunerfinn.com">Molunerfinn</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Mr.Yuen'Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Shell脚本的经典十三问</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-04-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/reprint/">reprint</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">2.1k</span><span class="post-meta__separator">|</span><span>Reading time: 8 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p><strong>为何叫做 Shell？</strong></p>
+<p>我们知道计算机的运作离不开硬件，但却无法直接操作硬件，硬件的驱动只能通过一种称之为“操作系统（OS，Opertating System）的软件来管控。Linux 严格来说是一个操作系统（OS）。</p>
+<p>使用者没有办法直接操作 Kernel，而是通过 Kernel 的“外壳”程序，也就是所谓的 Shell 来与 Kernel 沟通。Shell 是一个使用者与系统的交互界面（Interface），只能通过命令行（Command line）来使用系统来完成工作。因此 Shell 最简单的定义就是：命令解译器（Command Interpreter）</p>
+<ul>
+<li>将使用者的命令翻译给内核处理；</li>
+<li>同时，将内核处理结果翻译给使用者。</li>
+</ul>
+<p>不同的 OS 使用不同的 Kernel；同一个 kernel 之上，也可以使用不同的 Shell，常见的 Shell 有sh、bash、csh、ksh 等</p>
+<p><strong>Shell prompt（PS1）与 Carriage Return（CR）的关系？</strong></p>
+<p>成功登录一个 Shell 终端后，光标左边部分称之为提示符 Prompt，通常一般用户使用<code>$</code>，管理员用户使用<code>#</code></p>
+<ul>
+<li>Shell Prompt：可以输入命令了，键入命令后，直到读进 CR（Carriage Return）字符为止</li>
+<li>Carriage Return：可以执行命令了</li>
+</ul>
+<blockquote>
+<p>若从技术的细节来看，Shell 会依据 IFS（Internal Field Seperator）将 Command line 所输入的文字拆解为”字段”（word&#x2F;field）。然后再针对特殊字符（meta）先作处理，最后重组整行command line。</p>
+</blockquote>
+<p><strong>别人echo，你也echo，试问 echo 知多少?</strong></p>
+<p>echo 将 argument送到标准输出（stdout），通常显示在屏幕</p>
+<blockquote>
+<p>stdin    标准输入<br>stdout 标准输出<br>stderr  标准错误输出</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -n  <span class="comment"># 取消换行符</span></span><br><span class="line"><span class="built_in">echo</span> -e  <span class="comment"># 启用反斜杠转译</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>双引号””与单引号’’有什么区别?</strong></p>
+<ul>
+<li>hard quote：<code>&#39;&#39;</code>（单引号），关闭所有引用</li>
+<li>soft quote：  <code>&quot;&quot;</code>（双引号），保留$引用</li>
+</ul>
+<p><strong>var&#x3D;value? export 前后差在哪？</strong></p>
+<ul>
+<li>变量定义：    <code>name=value</code>，等号左右两边不能使用分隔符。</li>
+<li>变量替换：    <code>echo $&#123;name&#125;</code></li>
+<li>export变量：<code>export name=value</code>，使变量成为环境变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 本地变量</span></span><br><span class="line">A=B</span><br><span class="line"><span class="comment"># 取消变量</span></span><br><span class="line"><span class="built_in">unset</span> A</span><br><span class="line"><span class="comment"># 环境变量export A=B</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>exec 跟 source 差在哪？</strong></p>
+<blockquote>
+<p>环境变量只能从父进程到子进程单向传递。换句话说：在子进程中环境如何变更，均不会影响父进程的环境。<br>当我们执行一个 shell script 时，其实是先产生一个 sub-shell 的子进程， 然后 sub-shell 再去产生命令行的子进程。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建子shell执行脚本</span></span><br><span class="line">./1.sh</span><br><span class="line"><span class="comment"># 当前shell执行</span></span><br><span class="line"><span class="built_in">source</span> 1.sh</span><br><span class="line"><span class="comment"># 当前shell执行后退出</span></span><br><span class="line"><span class="built_in">exec</span> 1.sh</span><br></pre></td></tr></table></figure>
+
+<p><strong>( ) 与 { } 差在哪？</strong></p>
+<p><code>( )</code>将 command group 置于 sub-shell 执行<br><code>&#123; &#125;</code>则是在同一个 shell 内完成</p>
+<p><strong>$(()) 与 $() 还有 ${} 差在哪？</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 假设我们定义了一个变量为：</span></span><br><span class="line">file=/dir1/dir2/dir3/my.file.txt</span><br><span class="line"><span class="comment"># 我们可以用 $&#123; &#125; 分别替换获得不同的值：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. shell字符串的非贪婪(最小匹配)左删除</span></span><br><span class="line"><span class="variable">$&#123;file#*/&#125;</span> <span class="comment"># 拿掉第一条 / 及其左边的字符串：dir1/dir2/dir3/my.file.txt</span></span><br><span class="line"><span class="comment"># 2. shell字符串的贪婪(最大匹配)左删除</span></span><br><span class="line"><span class="variable">$&#123;file##*/&#125;</span> <span class="comment"># 拿掉最后一条 / 及其左边的字符串：my.file.txt</span></span><br><span class="line"><span class="variable">$&#123;file##*.&#125;</span> <span class="comment"># 拿掉最后一个 . 及其左边的字符串：txt</span></span><br><span class="line"><span class="comment"># 3. shell字符串的非贪婪(最小匹配)右删除：</span></span><br><span class="line"><span class="variable">$&#123;file%/*&#125;</span> <span class="comment"># 拿掉最后条 / 及其右边的字符串：/dir1/dir2/dir3</span></span><br><span class="line"><span class="variable">$&#123;file%.*&#125;</span> <span class="comment"># 拿掉最后一个 . 及其右边的字符串：/dir1/dir2/dir3/my.file</span></span><br><span class="line"><span class="comment"># 4. shell字符串的贪婪(最大匹配)右删除：</span></span><br><span class="line"><span class="variable">$&#123;file%%/*&#125;</span> <span class="comment"># 拿掉第一条 / 及其右边的字符串：(空值)</span></span><br><span class="line"><span class="variable">$&#123;file%%.*&#125;</span> <span class="comment"># 拿掉第一个 . 及其右边的字符串：/dir1/dir2/dir3/my</span></span><br><span class="line"></span><br><span class="line">记忆的方法为：</span><br><span class="line"><span class="comment"># 是去掉左边(在键盘上 # 在 $ 之左边)</span></span><br><span class="line">% 是去掉右边(在键盘上 % 在 $ 之右边)</span><br><span class="line">单一符号是最小匹配﹔两个符号是最大匹配。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 5. shell字符串取子串：</span></span><br><span class="line"><span class="variable">$&#123;file:0:5&#125;</span>：提取最左边的 5 个字节：/dir1</span><br><span class="line"><span class="variable">$&#123;file:5:5&#125;</span>：提取第 5 个字节右边的连续 5 个字节：/dir2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. shell字符串变量值的替换：</span></span><br><span class="line"><span class="variable">$&#123;file/dir/path&#125;</span>：将第一个 <span class="built_in">dir</span> 提换为 path：/path1/dir2/dir3/my.file.txt</span><br><span class="line"><span class="variable">$&#123;file//dir/path&#125;</span>：将全部 <span class="built_in">dir</span> 提换为 path：/path1/path2/path3/my.file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 7. $&#123;&#125;还可针对变量的不同状态(没设定、空值、非空值)进行赋值：</span></span><br><span class="line"><span class="variable">$&#123;file-my.file.txt&#125;</span> ：假如 <span class="variable">$file</span> 没有设定，则使用 my.file.txt 作传回值。(空值及非空值时不作处理) </span><br><span class="line"><span class="variable">$&#123;file:-my.file.txt&#125;</span> ：假如 <span class="variable">$file</span> 没有设定或为空值，则使用 my.file.txt 作传回值。(非空值时不作处理)</span><br><span class="line"><span class="variable">$&#123;file+my.file.txt&#125;</span> ：假如 <span class="variable">$file</span> 设为空值或非空值，均使用 my.file.txt 作传回值。(没设定时不作处理)</span><br><span class="line"><span class="variable">$&#123;file:+my.file.txt&#125;</span> ：若 <span class="variable">$file</span> 为非空值，则使用 my.file.txt 作传回值。(没设定及空值时不作处理)</span><br><span class="line"><span class="variable">$&#123;file=my.file.txt&#125;</span> ：若 <span class="variable">$file</span> 没设定，则使用 my.file.txt 作传回值，同时将 <span class="variable">$file</span> 赋值为 my.file.txt 。(空值及非空值时不作处理)</span><br><span class="line"><span class="variable">$&#123;file:=my.file.txt&#125;</span> ：若 <span class="variable">$file</span> 没设定或为空值，则使用 my.file.txt 作传回值，同时将 <span class="variable">$file</span> 赋值为 my.file.txt 。(非空值时不作处理)</span><br><span class="line"><span class="variable">$&#123;file?my.file.txt&#125;</span> ：若 <span class="variable">$file</span> 没设定，则将 my.file.txt 输出至 STDERR。(空值及非空值时不作处理)</span><br><span class="line"><span class="variable">$&#123;file:?my.file.txt&#125;</span> ：若 <span class="variable">$file</span> 没设定或为空值，则将 my.file.txt 输出至 STDERR。(非空值时不作处理)</span><br><span class="line"></span><br><span class="line">tips:</span><br><span class="line">以上的理解在于, 你一定要分清楚 <span class="built_in">unset</span> 与 null 及 non-null 这三种赋值状态.</span><br><span class="line">一般而言, : 与 null 有关, 若不带 : 的话, null 不受影响, 若带 : 则连 null 也受影响.</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 8. 计算shell字符串变量的长度：$&#123;#var&#125;</span></span><br><span class="line"><span class="variable">$&#123;#var&#125;</span> 可计算出变量值的长度：</span><br><span class="line"><span class="variable">$&#123;#file&#125;</span> 可得到 27 ，因为 /dir1/dir2/dir3/my.file.txt 刚好是 27 个字节...</span><br><span class="line"></span><br><span class="line"><span class="comment"># 9. bash数组(array)的处理方法</span></span><br><span class="line">数组:</span><br><span class="line">A=(a b c d)</span><br><span class="line">引用数组:</span><br><span class="line"><span class="variable">$&#123;A[@]&#125;</span></span><br><span class="line"><span class="variable">$&#123;A[*]&#125;</span></span><br><span class="line">访问数组成员</span><br><span class="line"><span class="variable">$&#123;A[0]&#125;</span></span><br><span class="line">计算数组长度</span><br><span class="line"><span class="variable">$&#123;#A[@]&#125;</span></span><br><span class="line"><span class="variable">$&#123;#A[*]&#125;</span></span><br><span class="line">数组重新赋值</span><br><span class="line">A[2]=xyz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 10.$(( ))是用来做整数运算的 </span></span><br><span class="line">a=5;b=7;c=2;</span><br><span class="line"><span class="built_in">echo</span> $(( a + b * c))</span><br></pre></td></tr></table></figure>
+
+<p><em><em>$@ 与 $</em> 区别在哪？</em>*</p>
+<ul>
+<li><code>&quot;$@&quot;</code>则可得到 “p1” “p2 p3” “p4” 这三个不同的词段</li>
+<li><code>&quot;$*&quot;</code>则可得到 “p1 p2 p3 p4” 这一整串单一的词段</li>
+</ul>
+<p><strong>&amp;&amp; 与 || 差在哪？</strong></p>
+<p>1、test命令有两种形式</p>
+<ul>
+<li>test expression</li>
+<li>[ expression ]</li>
+</ul>
+<p>2、bash的test目前支持三种测试对象</p>
+<ul>
+<li>string：字符串</li>
+<li>integer：整数</li>
+<li>file：文件</li>
+</ul>
+<p>3、当 expression 为真是返回 0（true） ，否则返回 非0（false）</p>
+<ul>
+<li>command1 &amp;&amp; command2  command2 只有在 command1 的 RV 为 0(True) 的条件下执行。</li>
+<li>command1 || command2  command2 只有在 command1 的 RV 为非 0(False) 的条件下执行。</li>
+</ul>
+<p>4、先替换变量再比较</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">A=123[ -n <span class="string">&quot;<span class="variable">$A</span>&quot;</span> ] &amp;&amp; ([ <span class="string">&quot;<span class="variable">$A</span>&quot;</span> -lt 100 ] || <span class="built_in">echo</span> <span class="string">&quot;too big&quot;</span>)<span class="built_in">unset</span> A</span><br></pre></td></tr></table></figure>
+
+<p><strong>与 &lt; 差在哪？</strong></p>
+<blockquote>
+<p>0: Standard Input（STDIN）<br>1: Standard Output （STDOUT）<br>2: Standard Error Output（STDERR）</p>
+</blockquote>
+<p>我们可用 &lt; 来改变读进的数据信道（stdin），使之从指定的档案读进。</p>
+<p>我们可用 &gt; 来改变送出的数据信道（stdout, stderr），使之输出到指定的档案。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> my.file no.such.file 1&gt; file.out 2&gt;file.err</span><br><span class="line"><span class="comment"># 2&gt;&amp;1 就是将stderr并进stdout做输出</span></span><br><span class="line"><span class="built_in">ls</span> my.file no.such.file 1&gt; file.out 2&gt;&amp;1</span><br><span class="line"><span class="comment"># /dev/null 空</span></span><br><span class="line"><span class="built_in">ls</span> my.file no.such.file &gt;/dev/null 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &lt; file &gt; file</span><br><span class="line"><span class="comment"># 在 IO Redirection 中，stdout 与 stderr 的管道会先准备好，才会从 stdin 读进资料。</span></span><br><span class="line"><span class="comment"># 也就是说，在上例中，&gt; file 会先将 file 清空，然后才读进 &lt; file ， </span></span><br><span class="line"><span class="comment"># 但这时候档案已经被清空了，因此就变成读不进任何数据了</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>你要 if 还是 case 呢？</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># if</span></span><br><span class="line"><span class="built_in">echo</span> -n <span class="string">&quot;Do you want to continue?(Yes/No):&quot;</span></span><br><span class="line"><span class="built_in">read</span> YN</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$YN</span>&quot;</span>=Y -o <span class="string">&quot;<span class="variable">$YN</span>&quot;</span>=y -o <span class="string">&quot;<span class="variable">$YN</span>&quot;</span>=<span class="string">&quot;Yes&quot;</span> -o <span class="string">&quot;<span class="variable">$YN</span>&quot;</span>=<span class="string">&quot;yes&quot;</span> -o <span class="string">&quot;<span class="variable">$YN</span>&quot;</span>=<span class="string">&quot;YES&quot;</span>];<span class="keyword">then</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;continue&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># case</span></span><br><span class="line"><span class="built_in">echo</span> -n <span class="string">&quot;Do you want to continue?(Yes/No):&quot;</span></span><br><span class="line"><span class="built_in">read</span> YN</span><br><span class="line"><span class="keyword">case</span> <span class="string">&quot;<span class="variable">$YN</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">[Yy]|[Yy][Ee][Ss])</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;continue&quot;</span></span><br><span class="line">;;</span><br><span class="line">*)</span><br><span class="line"><span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>for what? while与until差在哪？</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># for</span></span><br><span class="line"><span class="keyword">for</span> ((i=1;i&lt;=10;i++))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;num is <span class="variable">$i</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># while</span></span><br><span class="line">num=1</span><br><span class="line"><span class="keyword">while</span> [ <span class="string">&quot;<span class="variable">$num</span>&quot;</span> -le 10 ]; <span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;num is <span class="variable">$num</span>&quot;</span></span><br><span class="line">num=$((<span class="variable">$num</span> + <span class="number">1</span>))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># until</span></span><br><span class="line">num=1</span><br><span class="line">until [ <span class="string">&quot;<span class="variable">$num</span>&quot;</span> -gt 10 ]; <span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;num is <span class="variable">$num</span>&quot;</span></span><br><span class="line">num=$((<span class="variable">$nu</span> + <span class="number">1</span>))</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>break 是结束 loop</li>
+<li>return 是结束 function</li>
+<li>exit 是结束 script&#x2F;shell</li>
+</ul>
+<p><strong>参考文献</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/rustling/p/9833174.html">转载文章-关于 Shell 脚本的经典十三问</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/07/reprint/shell脚本的经典十三问/">https://blog.yuikuen.top/2022/04/07/reprint/shell脚本的经典十三问/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/shell/">shell</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/reprint/%E9%9D%9E%E5%B8%B8%E5%85%A8%E9%9D%A2%E7%9A%84CentOS7%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%92%8C%E5%8A%A0%E5%9B%BA%E8%84%9A%E6%9C%AC/"><i class="fa fa-chevron-left">  </i><span>非常全面的CentOS7系统安全检测和加固脚本</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/reprint/CentOS7%E4%B8%80%E9%94%AE%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA%E5%8F%8A%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96%E8%84%9A%E6%9C%AC/"><span>CentOS7一键安全加固及系统优化脚本</span><i class="fa fa-chevron-right"></i></a></div></nav><div class="post-adv"><a target="_blank" rel="noopener" href="https://www.vultr.com/"><img src="https://www.vultr.com/media/banner_1.png" width="728" height="90"></a></div><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = 'false' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'51vOu1zj5thMsDwfiYj0Gr34-gzGzoHsz',
+  appKey:'XPMz9Uun0aSLDkHrDVAlmy8Q',
+  placeholder:'Please enter your opinion',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 - 2022 By YuiKuen.Yuen</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://blog.yuikuen.top/">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
