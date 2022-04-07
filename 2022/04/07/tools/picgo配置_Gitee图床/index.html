@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="PicGo配置_Gitee图床"><meta name="keywords" content="picgo"><meta name="author" content="YuiKuen.Yuen"><meta name="copyright" content="YuiKuen.Yuen"><title>PicGo配置_Gitee图床 | Mr.Yuen'Blog</title><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/favicon.png"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1359876433997feef3afed2ab6c5b39c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.1.0'
+} </script><meta name="generator" content="Hexo 6.1.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">程序安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B-Gitee-%E5%9B%BE%E5%BA%8A%E5%BA%93"><span class="toc-number">2.</span> <span class="toc-text">建立 Gitee 图床库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-PicGo"><span class="toc-number">3.</span> <span class="toc-text">配置 PicGo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Typora"><span class="toc-number">4.</span> <span class="toc-text">配置 Typora</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220407100042.png"></div><div class="author-info__name text-center">YuiKuen.Yuen</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/yuikuen">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">9</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">6</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">3</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://molunerfinn.com">Molunerfinn</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Mr.Yuen'Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">PicGo配置_Gitee图床</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-04-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/tools/">tools</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">467</span><span class="post-meta__separator">|</span><span>Reading time: 1 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><blockquote>
+<p><strong>前言</strong>：一开始都是使用云笔记的，但不便于保存或查看，后面转到了在线博客。而在线博客的编辑器坑太多了，所以开始尝试不同的方案，现暂敲定采用 “Typora + GitHub + Hexo” 方式，而图床一开始也是保存本地的，但在上传时又过于慢，因此改成 “Typora + GitHub + Hexo + PicGo(Gitee)” 来实现 Markdown 图床。</p>
+</blockquote>
+<h3 id="程序安装"><a href="#程序安装" class="headerlink" title="程序安装"></a>程序安装</h3><ul>
+<li>PicGo (Windows、Manjaro Linux)</li>
+<li>PicGo-plugin-gitee-uploader 插件</li>
+</ul>
+<p>Windows 与 Manjaro Linux 的安装方式都较为简单，在此就不再详说，可参照 PicGo Github</p>
+<p><strong>安装后打开主界面</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20211207154537047.png" alt="image-20211207154537047"></p>
+<p><strong>选择插件设置-搜索 gitee -选择安装 gitee-uploader 1.1.2</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20211207154656271.png" alt="image-20211207154656271"></p>
+<blockquote>
+<p>注意：必须先安装 <a target="_blank" rel="noopener" href="https://nodejs.org/en/">node.js</a> 才能安装插件，请自行提前安装一下</p>
+</blockquote>
+<h3 id="建立-Gitee-图床库"><a href="#建立-Gitee-图床库" class="headerlink" title="建立 Gitee 图床库"></a>建立 Gitee 图床库</h3><p>注册码云方法略过，直接创建仓库即可，新建仓库要点如下：</p>
+<ul>
+<li>仓库名称不可重复</li>
+<li>仓库设为公开，便于博客访问</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20211207155208280.png" alt="image-20211207155208280"></p>
+<h3 id="配置-PicGo"><a href="#配置-PicGo" class="headerlink" title="配置 PicGo"></a>配置 PicGo</h3><p>打开软件，选择图床设置 gitee</p>
+<ul>
+<li>repo：用户名&#x2F;仓库名称</li>
+<li>branch：分支，默认为 master</li>
+<li>token：码云的私人令牌</li>
+<li>path：路径，根据实际填写</li>
+<li>customPath：提交消息，这一项和下一项customURL都不用填。在提交到码云后，会显示提交消息，插件默认提交的是 <code>Upload 图片名 by picGo - 时间</code></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20211207160229270.png" alt="image-20211207160229270"></p>
+<p><strong>Token 获取，在个人设置创建就有了</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20211207160827190.png" alt="image-20211207160827190"></p>
+<p>根据实际需求进行勾选，默认即可；</p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20211207161003426.png" alt="image-20211207161003426"></p>
+<p>需要验证一下密码，验证密码之后会出来一串数字，这一串数字就是你的 token，注意：这个令牌只会明文显示一次，建议在配置插件的时候再来生成令牌，直接复制进去</p>
+<h3 id="配置-Typora"><a href="#配置-Typora" class="headerlink" title="配置 Typora"></a>配置 Typora</h3><p>文件–偏好设置–图像，根据自身环境配置，点击验证图片上传选项即可，下以 <em>Windows</em> 为例</p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20211207161531543.png" alt="image-20211207161531543"></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/07/tools/picgo配置_Gitee图床/">https://blog.yuikuen.top/2022/04/07/tools/picgo配置_Gitee图床/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/picgo/">picgo</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/tools/picgo%E9%85%8D%E7%BD%AE_OneDrive%E5%9B%BE%E5%BA%8A/"><i class="fa fa-chevron-left">  </i><span>PicGo配置_OneDrive图床</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/tools/esxi%E9%97%AE%E9%A2%98_%E8%A7%A3%E5%86%B3%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%85%B3%E6%9C%BA%E5%8D%A1%E4%BD%8F%E9%97%AE%E9%A2%98%20/"><span>Esxi问题_解决虚拟机关机卡住问题</span><i class="fa fa-chevron-right"></i></a></div></nav><div class="post-adv"><a target="_blank" rel="noopener" href="https://promotion.aliyun.com/ntms/yunparter/index.html?taskCode=reward2204&recordId=3589045&userCode=5jbfjfcy&share_source=copy_link"><img src="https://img.alicdn.com/imgextra/i1/O1CN01Zwm6Z51e8M5E1f9Is_!!6000000003826-2-tps-2360-600.png" width="800" height="200"></a></div><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = 'false' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'51vOu1zj5thMsDwfiYj0Gr34-gzGzoHsz',
+  appKey:'XPMz9Uun0aSLDkHrDVAlmy8Q',
+  placeholder:'Please enter your opinion',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 - 2022 By YuiKuen.Yuen</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://blog.yuikuen.top/">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

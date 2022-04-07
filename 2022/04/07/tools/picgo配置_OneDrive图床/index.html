@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="PicGo配置_OneDrive图床"><meta name="keywords" content="picgo"><meta name="author" content="YuiKuen.Yuen"><meta name="copyright" content="YuiKuen.Yuen"><title>PicGo配置_OneDrive图床 | Mr.Yuen'Blog</title><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/favicon.png"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1359876433997feef3afed2ab6c5b39c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.1.0'
+} </script><meta name="generator" content="Hexo 6.1.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">需求分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PicGo-%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">PicGo 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PoweredBy-Cloud-%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">PoweredBy.Cloud 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PicGo-%E9%85%8D%E7%BD%AE-S3"><span class="toc-number">4.</span> <span class="toc-text">PicGo 配置 S3</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220407100042.png"></div><div class="author-info__name text-center">YuiKuen.Yuen</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/yuikuen">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">9</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">6</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">3</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://molunerfinn.com">Molunerfinn</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Mr.Yuen'Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">PicGo配置_OneDrive图床</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-04-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/tools/">tools</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">875</span><span class="post-meta__separator">|</span><span>Reading time: 2 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><blockquote>
+<p><strong>前言</strong>：之前使用 Github 作为 Hexo 博客，而 Gitee 作为博客图床使用，但 22&#x2F;03&#x2F;27 之后，Gitee 图床废了！！具说是官方添加了防盗链导致，虽然现在 Typora + PicGo + Gitee 的图床是可以正常显示了，我的笔记都得以查看，但我博客还是无法显示图片，而 Gitee 作为图床，体质也不算太好(有 1M 图片大小的限制)，为了安全起见，还是建议更换图床。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/3eddd173846db4ea4004f8034cce489e.png" alt="image-20220329104339503"></p>
+<h3 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h3><ul>
+<li>不想额外花费，可免费决不采用收费方式，比如使用 OneDrive、GoogleDrive</li>
+<li>能帮助我管理图片，作为免费的图床，Typora &amp; Blog 都能在网络获取图片</li>
+</ul>
+<p>经过多番查证，为了方便自己的习惯，具体方案还是选择 PicGo +  OneDrive(Amazon S3) + Typora + Blog。PicGo 不提供存储，但它有个 Amazon S3 插件，配合 PoweredBy.Cloud + S3 插件，可实现 OneDrive 图床服务</p>
+<p>1）为什么使用 OneDrive</p>
+<p>Amazon S3 是一个产品，主流的存储产品，比如阿里云 OSS、华为 OSS、腾讯 COS 等，虽然存储不贵，但还是有带宽、流量等费用问题；</p>
+<p>而 OneDrive 免费 5G 空间，容量不足还能升级，将来文件迁移也方便，也自带杀毒和备份恢复功能（GoogleDrive 免费 15G 空间，但国内上传和访问都是问题，也就放弃了）</p>
+<p>2）PicGo 的好处</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo">PicGo</a> 是开源产品，可以在 Github 上找到，在 Win、Linux、MacOS 等不同平台都提供了程序，并且还可以安装不同的插件来配合各大存储服务；</p>
+<h3 id="PicGo-安装"><a href="#PicGo-安装" class="headerlink" title="PicGo 安装"></a>PicGo 安装</h3><p>安装方式都较为简单，在此就不再详说，可参照 PicGo Github</p>
+<p>1）<strong>安装后打开主界面</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/da8c34e3a24806ab88854faae58451a9.png" alt="image-20220329113154369"></p>
+<p>2）<strong>选择插件设置-搜索 S3 -选择安装 S3 1.1.4(picgo amazon s3 uploader)</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/a6bdcaf760592f201da335997203183f.png" alt="image-20220329112946374"></p>
+<blockquote>
+<p>注意：必须先安装 <a target="_blank" rel="noopener" href="https://nodejs.org/en/">node.js</a> 才能安装插件，请自行提前安装一下</p>
+</blockquote>
+<h3 id="PoweredBy-Cloud-配置"><a href="#PoweredBy-Cloud-配置" class="headerlink" title="PoweredBy.Cloud 配置"></a>PoweredBy.Cloud 配置</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://poweredby.cloud/">PoweredBy.Cloud</a> 是一个将 GoogleDrive 和 OneDrive 变成图床的工具，存在网盘里文件的支链我们是无法获取的，如果能获取到文件的支链，那就能将 GoogleDrive 和 OneDrive 当作图床用，它就是这样一个免费工具，提供网盘的直链，而且使用起来没有任何限制</p>
+</blockquote>
+<p>1）注册账号 </p>
+<ol>
+<li>打开 <a target="_blank" rel="noopener" href="https://poweredby.cloud/">PoweredBy.Cloud</a> 并注册，注册非常简单，只需要提供一个可收邮件的邮箱，登录地址会发送到邮箱</li>
+<li>在邮箱里找到登录地址，并点击登录地址登录到 PoweredBy.Cloud</li>
+<li>在 PoweredBy.Cloud 的控制台里添加一个 site，例如：<a target="_blank" rel="noopener" href="http://demo.stdcdn.com/">http://demo.stdcdn.com</a>  选择 GoogleDrive 或者 OneDrive 作为存储空间(PoweredBy.Cloud 会在你的网盘里创建一个 <a target="_blank" rel="noopener" href="http://demo.stdcdn.com/">http://demo.stdcdn.com</a> 的文件夹)</li>
+</ol>
+<p>注册site截图如下，Site Name 将在后面使用</p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/f8a423e911cf882ce7b45bc9c82096e8.png" alt="image-20220329114225569"></p>
+<p>2）创建 Developer 密钥(S3)</p>
+<p>点击 Developer 选项-&gt;点击 Create Access Key 按钮-&gt;输入任意 key 名称(仅做备注)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/fda4209f4bd3370934b82f5861cdbb94.png" alt="image-20220329114559645"></p>
+<h3 id="PicGo-配置-S3"><a href="#PicGo-配置-S3" class="headerlink" title="PicGo 配置 S3"></a>PicGo 配置 S3</h3><p>配置 S3 的关键参数在创建密钥后，access_key、secret_access_key 都已经出现，剩下的还有两个关键值</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//下面是两个关键参数</span></span><br><span class="line"><span class="comment">//固定值,endpoint 自定义节点</span></span><br><span class="line">endpoint_url=<span class="string">&#x27;https://stdcdn.com&#x27;</span></span><br><span class="line"><span class="comment">//桶,bucketName 这就是你的SiteName。</span></span><br><span class="line">bucket=<span class="string">&quot;yuikuen&quot;</span></span><br><span class="line"><span class="comment">//自定义节点</span></span><br><span class="line"><span class="attr">https</span>:<span class="comment">//stdcdn.com</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/1ec466a959fe032877e4fce8c0bc987b.png" alt="image-20220331151315083"></p>
+<p><strong>测试图片上传效果</strong></p>
+<p>1）使用 PicGo 测试上传效果，最终会在我们的 OneDrive 中出现</p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/ccd5adfe012727d0212a7a766d204878.png" alt="image-20220331151355857"></p>
+<p>2）Typora 中，可以在图像中配置上传图片，并且上传可以进行验证图片上传选项操作</p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/a433a9e8a646062b9b12ab7065d8b69f.png" alt="image-20220329115206895"></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/07/tools/picgo配置_OneDrive图床/">https://blog.yuikuen.top/2022/04/07/tools/picgo配置_OneDrive图床/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/picgo/">picgo</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/tools/vscode%E9%85%8D%E7%BD%AE_springboot%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83/"><i class="fa fa-chevron-left">  </i><span>VsCode配置_SpringBoot项目环境</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/tools/picgo%E9%85%8D%E7%BD%AE_Gitee%E5%9B%BE%E5%BA%8A/"><span>PicGo配置_Gitee图床</span><i class="fa fa-chevron-right"></i></a></div></nav><div class="post-adv"><a target="_blank" rel="noopener" href="https://promotion.aliyun.com/ntms/yunparter/index.html?taskCode=reward2204&recordId=3589045&userCode=5jbfjfcy&share_source=copy_link"><img src="https://img.alicdn.com/imgextra/i1/O1CN01Zwm6Z51e8M5E1f9Is_!!6000000003826-2-tps-2360-600.png" width="800" height="200"></a></div><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = 'false' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'51vOu1zj5thMsDwfiYj0Gr34-gzGzoHsz',
+  appKey:'XPMz9Uun0aSLDkHrDVAlmy8Q',
+  placeholder:'Please enter your opinion',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 - 2022 By YuiKuen.Yuen</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://blog.yuikuen.top/">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
