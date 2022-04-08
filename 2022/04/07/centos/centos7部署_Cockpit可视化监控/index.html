@@ -18,7 +18,7 @@
 <p>Cockpit 是一款基于 Web 的可视化管理工具，对一些常见的命令行管理操作都有界面支持，比如用户管理、防火墙管理、服务器资源监控等</p>
 </blockquote>
 <p>测试环境为 CentOS 7 版本，此外 Cockpit 还支持其他 Linux 发行版，请自行体验；另程序可根据需要进行扩展，实现各应用监控</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220222102955180.png" alt="image-20220222102955180"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220222102955180.png" alt="image-20220222102955180"></p>
 <h3 id="程序安装"><a href="#程序安装" class="headerlink" title="程序安装"></a>程序安装</h3><p>1）Cockpit 安装(具体功能介绍请参考官网)</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum install -y cockpit cockpit-storaged cockpit-networkmanager cockpit-packagekit cockpit-ostree cockpit-machines cockpit-podman cockpit-selinux cockpit-kdump cockpit-sosreport cockpit-docker cockpit-dashboard</span><br></pre></td></tr></table></figure>
 
@@ -29,25 +29,25 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ systemctl <span class="built_in">enable</span> --now cockpit.socket</span><br><span class="line">$ firewall-cmd --permanent --zone=public --add-service=cockpit</span><br><span class="line">$ firewall-cmd --reload</span><br></pre></td></tr></table></figure>
 
 <p>3）浏览器访问 9090 端口测试</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220222104321113.png" alt="image-20220222104321113"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220222104321113.png" alt="image-20220222104321113"></p>
 <p>用户名和密码就是 linux 服务器的用户名和密码，登陆即可进入首页</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220222105217234.png" alt="image-20220222105217234"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220222105217234.png" alt="image-20220222105217234"></p>
 <h3 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h3><ul>
 <li>仪表盘</li>
 </ul>
 <p>其他服务器也安装 Cockpit，可将机器添加到监控列表</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220222105350227.png" alt="image-20220222105350227"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220222105350227.png" alt="image-20220222105350227"></p>
 <ul>
 <li>网络监控</li>
 </ul>
 <p>可配置防火墙，开放或禁止服务、端口等功能</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220222105559611.png" alt="image-20220222105559611"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220222105559611.png" alt="image-20220222105559611"></p>
 <ul>
 <li>虚拟容器</li>
 </ul>
 <p>运行镜像以及拉取新镜像</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220222105729292.png" alt="image-20220222105729292"></p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220222105856251.png" alt="image-20220222105856251"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220222105729292.png" alt="image-20220222105729292"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220222105856251.png" alt="image-20220222105856251"></p>
 <ul>
 <li>还有更多的功能，在此就不再逐一介绍，请自行搭建体验。</li>
 </ul>

@@ -20,7 +20,7 @@
 <p>1）修改 Jenkins 插件下载地址</p>
 <p>Jenkins 国外官方插件地址下载速度非常慢，所以可以修改为国内插件地址：</p>
 <p>Jenkins &gt; Manage Jenkins &gt; Manage Plugins，点击标签 Advanced</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112142954124.png" alt="image-20220112142954124"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112142954124.png" alt="image-20220112142954124"></p>
 <p>2）进入 Jenkins 文件目录 <code>/var/lib/jenkins/updates</code> ，其它安装方式目录可能会在 <code>/root/.jenkins</code></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cd /var/lib/jenkins/updates/</span><br><span class="line">$ sed -i &#x27;s/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g&#x27; default.json &amp;&amp; sed -i &#x27;s/http:\/\/www.google.com/https:\/\/www.baidu.com/g&#x27; default.json</span><br></pre></td></tr></table></figure>
 
@@ -31,7 +31,7 @@
 <p>Sumbit后，在浏览器输入： <a target="_blank" rel="noopener" href="http://188.188.3.82:8080/restart">http://188.188.3.82:8080/restart</a> ，重启Jenkins</p>
 <p>3）安装中文汉化插件</p>
 <p>Jenkins &gt; Manage Jenkins &gt; Manage Plugins，点击标签 Available，搜索”Chinese”</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112144002694.png" alt="image-20220112144002694"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112144002694.png" alt="image-20220112144002694"></p>
 <p>重启 Jenkins 后，就看到 Jenkins 汉化了</p>
 <p><strong>参考文献</strong></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kJ411p7mV?from=search&seid=16079250692279453903&spm_id_from=333.337.0.0">黑马程序员Java教程自动化部署Jenkins从环境配置到项目开发</a></p>

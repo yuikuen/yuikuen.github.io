@@ -20,9 +20,9 @@
 <ol>
 <li>要在 Jenkins 使用凭证管理功能，需要安装 Credentials Binding 插件</li>
 </ol>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112164930438.png" alt="image-20220112164930438"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112164930438.png" alt="image-20220112164930438"></p>
 <p>安装后在管理页面就可看到 Manage Credentials</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112165622831.png" alt="image-20220112165622831"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112165622831.png" alt="image-20220112165622831"></p>
 <p>凭证类型有 5 种：</p>
 <ul>
 <li>Username with password：用户名和密码</li>
@@ -40,35 +40,35 @@
 </ol>
 <p>为了让 Jenkins 支持从 GitLab 拉取源码，需要安装 Git 插件以及在 CentOS 7上安装 Git 工具</p>
 <h3 id="创建凭证"><a href="#创建凭证" class="headerlink" title="创建凭证"></a>创建凭证</h3><h4 id="账密类型"><a href="#账密类型" class="headerlink" title="账密类型"></a>账密类型</h4><p>1）Jenkins &gt; 系统管理 &gt; Manage Credentials &gt; 系统 &gt; 全局凭证 &gt; 添加凭证</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112172011934.png" alt="image-20220112172011934"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112172011934.png" alt="image-20220112172011934"></p>
 <p>选择”Username with password”，输入Gitlab的用户名和密码，点击”确定”  (添加之前搭建 GitLab 所创建的测试用户)</p>
 <p>2）测试凭证</p>
 <p>创建一个 AuthStyle 项目：新建 Item &gt; AuthStyle  Project &gt; 确定</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112172401992.png" alt="image-20220112172401992"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112172401992.png" alt="image-20220112172401992"></p>
 <p>找到”源码管理” &gt;”Git”，在 Repository URL 复制 Gitlab 中的项目 URL</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112172621641.png" alt="image-20220112172621641"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112172621641.png" alt="image-20220112172621641"></p>
 <p>按照提示进入填写，在 Credentials 选择凭证就不报错了(http类型)</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112173137880.png" alt="image-20220112173137880"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112173137880.png" alt="image-20220112173137880"></p>
 <p>保存配置后，点击构建 “Build Now” 开始构建项目</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112173341208.png" alt="image-20220112173341208"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112173341208.png" alt="image-20220112173341208"></p>
 <p>查看 <code>/var/lib/jenkins/workspace/</code> 目录，可查看已从 GitLab 成功拉取的代码</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ pwd</span><br><span class="line">/var/lib/jenkins/workspace</span><br><span class="line">$ ll</span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x. 4 root root 81 Jan 12 17:33 AuthStyle</span><br><span class="line">drwxr-xr-x. 2 root root  6 Jan 12 17:33 AuthStyle@tmp</span><br><span class="line">$ cd AuthStyle</span><br><span class="line">$ ls</span><br><span class="line">pom.xml  README.en.md  README.md  src</span><br></pre></td></tr></table></figure>
 
-<h4 id="SSH-密钥"><a href="#SSH-密钥" class="headerlink" title="SSH 密钥"></a>SSH 密钥</h4><p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112174607414.png" alt="image-20220112174607414"></p>
+<h4 id="SSH-密钥"><a href="#SSH-密钥" class="headerlink" title="SSH 密钥"></a>SSH 密钥</h4><p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112174607414.png" alt="image-20220112174607414"></p>
 <p>1）Jenkins 服务器使用 root 用户生成公钥 &amp; 私钥</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;[your_mail]&quot; -f ~/.ssh/[custom_name]</span><br><span class="line">$ ssh-keygen -t rsa -C &quot;jenkins@example.com&quot;              //一路回车即可</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa): </span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:CZu+JqYfJ8Y8RqXJhSfanl3W6KrDq7eWqhJ83/+lEBM jenkins@example.com</span><br><span class="line">The key&#x27;s randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|                 |</span><br><span class="line">|     .           |</span><br><span class="line">|    o =  E       |</span><br><span class="line">|   + B + +.      |</span><br><span class="line">|. . * o So.      |</span><br><span class="line">|.. * + +  o      |</span><br><span class="line">| ...%.= ..   .   |</span><br><span class="line">|.  oO*.+  . o    |</span><br><span class="line">|o.+O=Bo ...o     |</span><br><span class="line">+----[SHA256]-----+</span><br><span class="line"></span><br><span class="line">$ ll ~/.ssh/</span><br><span class="line">total 8</span><br><span class="line">-rw-------. 1 root root 1675 Jan 12 18:02 id_rsa            //私钥</span><br><span class="line">-rw-r--r--. 1 root root  401 Jan 12 18:02 id_rsa.pub        //公钥</span><br></pre></td></tr></table></figure>
 
 <p>2）把生成的公钥放在 GitLab 中</p>
 <p>以 root 账户登录 &gt; 点击头像 &gt; Settings &gt; SSH Keys</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112180548841.png" alt="image-20220112180548841"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112180548841.png" alt="image-20220112180548841"></p>
 <p>复制刚才的 id_rsa.pub 文件内容到上述图位置，点击”添加密钥”</p>
 <p>3）在 Jenkins 中添加凭证，配置私钥</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112180943301.png" alt="image-20220112180943301"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112180943301.png" alt="image-20220112180943301"></p>
 <p>4）测试凭证是否可用</p>
 <p>新建”project-ssh”项目 &gt; 源码管理 &gt; Git，使用 GitLab 的 SSH 连接，并且选择 SSH 凭证</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220113105817658.png" alt="image-20220113105817658"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220113105817658.png" alt="image-20220113105817658"></p>
 <p>同样构建并查看相关目录是否成功拉取</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220113110058226.png" alt="image-20220113110058226"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220113110058226.png" alt="image-20220113110058226"></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ll ~/.jenkins/workspace/</span><br><span class="line">total 0</span><br><span class="line">drwxr-x---. 4 root root 81 Jan 13 10:58 project-ssh</span><br><span class="line">drwxr-x---. 2 root root  6 Jan 13 10:58 project-ssh@tmp</span><br><span class="line">$ ll ~/.jenkins/workspace/project-ssh</span><br><span class="line">total 12</span><br><span class="line">-rw-r-----. 1 root root 2336 Jan 13 10:58 pom.xml</span><br><span class="line">-rw-r-----. 1 root root  186 Jan 13 10:58 README.en.md</span><br><span class="line">-rw-r-----. 1 root root  176 Jan 13 10:58 README.md</span><br><span class="line">drwxr-x---. 3 root root   18 Jan 13 10:58 src</span><br></pre></td></tr></table></figure>
 
 <p><strong>参考文献</strong></p>

@@ -98,7 +98,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220407172243529.png" alt="image-20220407172243529"></p>
 <h3 id="异常问题"><a href="#异常问题" class="headerlink" title="异常问题"></a>异常问题</h3><p>1）php 编译失败</p>
 <p><strong>下载安装 CMake</strong></p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220212160831028.png" alt="image-20220212160831028"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220408090742.png" alt="20220408090742.png"></p>
 <blockquote>
 <p>CMake Error at CMakeLists.txt:1 (cmake_minimum_required):<br>CMake 3.0.2 or higher is required.  You are running version 2.8.12.2</p>
 </blockquote>
@@ -117,7 +117,7 @@
 <ul>
 <li>方法二：(方法一下载较慢时可选择编译安装)</li>
 </ul>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220212154256608.png" alt="image-20220212154256608"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220408090945.png" alt="20220408090945.png"></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://github.com/kkos/oniguruma/archive/refs/tags/v6.9.7.1.tar.gz</span><br><span class="line">$ tar -xf v6.9.7.1.tar.gz &amp;&amp; <span class="built_in">cd</span> ./oniguruma-6.9.7.1</span><br><span class="line">$ ./autogen.sh &amp;&amp; ./configure \</span><br><span class="line">--bindir=/usr/sbin/ \</span><br><span class="line">--sbindir=/usr/sbin/ \</span><br><span class="line">--libexecdir=/usr/libexec \</span><br><span class="line">--sysconfdir=/etc/ \</span><br><span class="line">--localstatedir=/var \</span><br><span class="line">--libdir=/usr/lib64/  \</span><br><span class="line">--includedir=/usr/include/ \</span><br><span class="line">--datarootdir=/usr/share \</span><br><span class="line">--infodir=/usr/share/info \</span><br><span class="line">--localedir=/usr/share/locale \</span><br><span class="line">--mandir=/usr/share/man/ \</span><br><span class="line">--docdir=/usr/share/doc/onig</span><br><span class="line"></span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 
 <p><strong>下载安装 libzip</strong></p>
@@ -129,7 +129,7 @@
 <ul>
 <li>方法一：</li>
 </ul>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220212160445815.png" alt="image-20220212160445815"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220408091118.png" alt="20220408091118.png"></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ yum remove libzip -y</span><br><span class="line">$ wget https://libzip.org/download/libzip-1.8.0.tar.gz</span><br><span class="line">$ tar -xf libzip-1.8.0.tar.gz &amp;&amp; <span class="built_in">cd</span> ./libzip-1.8.0</span><br><span class="line">$ <span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build \</span><br><span class="line">&amp;&amp; cmake -DCMAKE_INSTALL_PREFIX=/usr .. \</span><br><span class="line">&amp;&amp; make \</span><br><span class="line">&amp;&amp; make install</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -144,7 +144,7 @@
 <blockquote>
 <p>登录无限循环或提示服务器不能完成您的请求、内部服务器错误不能完成请求等，请求的 ID 会不断改变，查询 logo 也没有太多有用的信息；</p>
 </blockquote>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220214172352531.png" alt="image-20220214172352531"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220408091203.png" alt="20220408091203.png"></p>
 <ul>
 <li>原因一：</li>
 </ul>
@@ -157,7 +157,7 @@
 <p><strong>MySQL-sort_buffer_size 参数</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line"><span class="comment"># 根据实际分配，MySQL官方文档推荐范围为256KB~2MB</span></span><br><span class="line">sort_buffer_size=10M</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220214172838493.png" alt="image-20220214172838493"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220214172838493.png" alt="image-20220214172838493"></p>
 </div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/07/nextcloud/centos7部署_LNMP&amp;Nextcloud(新版)/">https://blog.yuikuen.top/2022/04/07/nextcloud/centos7部署_LNMP&amp;Nextcloud(新版)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/nextcloud/">nextcloud</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/nextcloud/centos7%E9%83%A8%E7%BD%B2_LNMP&amp;Nextcloud(%E6%97%A7%E7%89%88)/"><i class="fa fa-chevron-left">  </i><span>CentOS7部署_LNMP&amp;Nextcloud(旧版)</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/mysql/centos7%E9%83%A8%E7%BD%B2_MySQL8.0(%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85)/"><span>CentOS7部署_MySQL8.0(编译安装)</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
 var verify = 'false' == 'true';
 var record_ip = 'false' == 'true';

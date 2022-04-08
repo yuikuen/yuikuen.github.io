@@ -22,17 +22,17 @@
 <li>轮询SCM（Poll SCM）</li>
 </ul>
 <h3 id="触发远程构建"><a href="#触发远程构建" class="headerlink" title="触发远程构建"></a>触发远程构建</h3><p>通过访问特殊的预定义URL(便于脚本)来触发新的构建，以字符串的形式提供授权令牌来控制是否拒绝构建</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220113182205511.png" alt="image-20220113182205511"></p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220113182730783.png" alt="image-20220113182730783"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220113182205511.png" alt="image-20220113182205511"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220113182730783.png" alt="image-20220113182730783"></p>
 <h3 id="其他工程构建后触发"><a href="#其他工程构建后触发" class="headerlink" title="其他工程构建后触发"></a>其他工程构建后触发</h3><p>待前置工程完成后即可触发，例子如下：</p>
 <p>1）创建前置工程流水线</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220114110146037.png" alt="image-20220114110146037"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220114110146037.png" alt="image-20220114110146037"></p>
 <p>2）配置需要触发的工程</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220114110346655.png" alt="image-20220114110346655"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220114110346655.png" alt="image-20220114110346655"></p>
 <p>前置工程 Build Now 时，后置工程自动触发任务进行 Build 操作</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220114110521435.png" alt="image-20220114110521435"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220114110521435.png" alt="image-20220114110521435"></p>
 <h3 id="定时构建"><a href="#定时构建" class="headerlink" title="定时构建"></a>定时构建</h3><p>定时构建与 crontab 功能同义，都是制定时间任务进行</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220114111035305.png" alt="image-20220114111035305"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220114111035305.png" alt="image-20220114111035305"></p>
 <p>定时字符串从左往右分别为：分 时 日 月 周</p>
 <p><strong>参考例子：</strong></p>
 <blockquote>
@@ -57,13 +57,13 @@
 <p>在每个小时的前半个小时内的每10分种：H(0-29)&#x2F;10 * * * *</p>
 <p>每两小时一次，每个工作日上午9点到下午5点(也许是上午10:38，下午12:38，下午2:38，下午4:38：H H(9-16)&#x2F;2 * * 1-5</p>
 </blockquote>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220114121703856.png" alt="image-20220114121703856"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220114121703856.png" alt="image-20220114121703856"></p>
 <p>根据定时构建，每隔一分钟执行一次</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220114121757257.png" alt="image-20220114121757257"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220114121757257.png" alt="image-20220114121757257"></p>
 <h3 id="轮询-SCM"><a href="#轮询-SCM" class="headerlink" title="轮询 SCM"></a>轮询 SCM</h3><p>指定时扫描本地代码仓库的代码是否有变更，如果代码有变更就触发项目构建</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220114141259200.png" alt="image-20220114141259200"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220114141259200.png" alt="image-20220114141259200"></p>
 <p>每两分钟进行一次轮询，判断代码是否有变动，有则构建(阶段视图显示为commit)</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220114141447004.png" alt="image-20220114141447004"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220114141447004.png" alt="image-20220114141447004"></p>
 <p>注意：这次构建触发器，Jenkins 会定时扫描本地整个项目的代码，增大系统的开销，不建议使用</p>
 <p><strong>参考文献</strong></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kJ411p7mV?from=search&seid=16079250692279453903&spm_id_from=333.337.0.0">黑马程序员Java教程自动化部署Jenkins从环境配置到项目开发</a></p>

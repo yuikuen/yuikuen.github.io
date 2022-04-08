@@ -18,21 +18,21 @@
 <p>Jenkins 用户权限可利用 <a target="_blank" rel="noopener" href="https://plugins.jenkins.io/role-strategy">Role-based Authorization Strategy</a> 插件来管理 </p>
 </blockquote>
 <h3 id="开启插件"><a href="#开启插件" class="headerlink" title="开启插件"></a>开启插件</h3><p><strong>安装 Role-based Authorization Strategy 插件</strong></p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112144903191.png" alt="image-20220112144903191"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112144903191.png" alt="image-20220112144903191"></p>
 <p><strong>开启权限全局安全配置</strong></p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112145013240.png" alt="image-20220112145013240"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112145013240.png" alt="image-20220112145013240"></p>
 <p>授权策略切换为”Role-Based Strategy”，保存</p>
 <h3 id="创建角色"><a href="#创建角色" class="headerlink" title="创建角色"></a>创建角色</h3><p>在系统管理页面进入 Manage and Assign Roles</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112145804915.png" alt="image-20220112145804915"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112145804915.png" alt="image-20220112145804915"></p>
 <p>点击”Manage Roles”，查看角色管理</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112150447722.png" alt="image-20220112150447722"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112150447722.png" alt="image-20220112150447722"></p>
 <ul>
 <li>Global roles(全局角色)：管理员等高级用户可以创建基于全局的角色</li>
 <li>Item roles(项目角色)：针对某个或者某些项目的角色</li>
 <li>Node roles(节点角色)：节点相关的权限，多为主从时使用</li>
 </ul>
 <h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><p>在系统管理页面进入 Manage Users(管理用户)</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112152906136.png" alt="image-20220112152906136"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112152906136.png" alt="image-20220112152906136"></p>
 <p>分别创建两个用户：rd001 &amp; rd002</p>
 <h3 id="实验例子"><a href="#实验例子" class="headerlink" title="实验例子"></a>实验例子</h3><p>通过创建不同的全局角色来给用户分配不同的角色权限</p>
 <ul>
@@ -44,18 +44,18 @@
 <li><p>role2：项目角色，使用正则表达式绑定”dev.*”，意思是只能操作 dev 开头的项目</p>
 </li>
 </ul>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112152040113.png" alt="image-20220112152040113"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112152040113.png" alt="image-20220112152040113"></p>
 <p><strong>给用户分配角色</strong>，系统管理页面进入 Manage and Assign Roles，点击 Assign Roles</p>
 <ul>
 <li>rd001 用户分别绑定 baseRole 和 role1 角色</li>
 <li>rd002 用户分别绑定 baseRole 和 role2 角色</li>
 </ul>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112153620521.png" alt="image-20220112153620521"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112153620521.png" alt="image-20220112153620521"></p>
 <p><strong>创建项目测试权限</strong></p>
 <p>以管理员账户创建两个项目，分别为 <code>prod001</code> 和 <code>dev001</code></p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112153948552.png" alt="image-20220112153948552"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112153948552.png" alt="image-20220112153948552"></p>
 <p>结果为：用户 rd001 只能查看前缀为 <code>pro</code> 的项目</p>
-<p><img src="https://gitee.com/yuikuen_yuen/blog-picgo/raw/master/images/image-20220112154024335.png" alt="image-20220112154024335"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220112154024335.png" alt="image-20220112154024335"></p>
 <p><strong>参考文献</strong></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kJ411p7mV?from=search&seid=16079250692279453903&spm_id_from=333.337.0.0">黑马程序员Java教程自动化部署Jenkins从环境配置到项目开发</a></p>
 </div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/07/learn/001黑马自动化部署Jenkins从环境配置到项目开发/008_Jenkins-用户权限管理/">https://blog.yuikuen.top/2022/04/07/learn/001黑马自动化部署Jenkins从环境配置到项目开发/008_Jenkins-用户权限管理/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/jenkins/">jenkins</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/07/learn/001%E9%BB%91%E9%A9%AC%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2Jenkins%E4%BB%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%88%B0%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/009_Jenkins-%E5%87%AD%E8%AF%81%E7%AE%A1%E7%90%86/"><i class="fa fa-chevron-left">  </i><span>009_Jenkins-凭证管理</span></a></div><div class="next-post pull-right"><a href="/2022/04/07/learn/001%E9%BB%91%E9%A9%AC%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2Jenkins%E4%BB%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%88%B0%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/007_Jenkins-%E6%8F%92%E4%BB%B6%E7%AE%A1%E7%90%86/"><span>007_Jenkins-插件管理</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
