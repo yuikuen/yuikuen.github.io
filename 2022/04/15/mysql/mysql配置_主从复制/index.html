@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="MySQL配置_主从复制"><meta name="keywords" content="mysql"><meta name="author" content="YuiKuen.Yuen"><meta name="copyright" content="YuiKuen.Yuen"><title>MySQL配置_主从复制 | Mr.Yuen'Blog</title><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/favicon.png"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1359876433997feef3afed2ab6c5b39c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.1.0'
+} </script><meta name="generator" content="Hexo 6.1.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%A6%81%E8%AF%B4%E6%98%8E"><span class="toc-number">1.</span> <span class="toc-text">概要说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">实验操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Master-%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text">Master 配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Slave-%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">Slave 配置</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/20220407100042.png"></div><div class="author-info__name text-center">YuiKuen.Yuen</div><div class="author-info__description text-center"></div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/yuikuen">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">136</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">57</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">28</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="https://molunerfinn.com">Molunerfinn</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Mr.Yuen'Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">MySQL配置_主从复制</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-04-15</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/mysql/">mysql</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">2.2k</span><span class="post-meta__separator">|</span><span>Reading time: 9 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><blockquote>
+<p>MySQL 主从复制的方式有多种，本文主要介绍基于日志 binlog 的主从复制方式</p>
+</blockquote>
+<h3 id="概要说明"><a href="#概要说明" class="headerlink" title="概要说明"></a>概要说明</h3><ol>
+<li><strong>MySQL 主从复制（也称 A&#x2F;B 复制） 的原理</strong></li>
+</ol>
+<ul>
+<li>Master 将数据改变记录到二进制日志 <code>binary log</code> 中(配置文件 <code>log-bin</code> 指定的文件，叫做二进制事件 <code>binary log events</code>)</li>
+<li>Slave 通过 I&#x2F;O 线程读取 Master 中的 <code>binary log events</code> 并写入到它的中继日志 <code>relay log</code></li>
+<li>Slave 重做中继日志中的事件，把中继日志中的事件信息逐条在本地执行，完成数据在本地的存储，从而实现数据重放</li>
+</ul>
+<ol start="2">
+<li><strong>主从配置注意事项</strong></li>
+</ol>
+<ul>
+<li>主从服务器操作系统版本和位数一致；</li>
+<li>Master 和 Slave 数据库的版本要一致；</li>
+<li>Master 和 Slave 数据库中的数据要一致；</li>
+<li>Master 开启二进制日志，Master 和 Slave 的 Server_id 在局域网内必须唯一；</li>
+</ul>
+<ol start="3">
+<li><strong>主从配置操作步骤</strong></li>
+</ol>
+<ul>
+<li>Master 配置<ul>
+<li>安装数据库</li>
+<li>修改数据库配置文件，指明 Server_id，开启二进制日志 <code>log-bin</code></li>
+<li>启动数据库，查看当前是哪个日志，<code>Position</code> 号是多少</li>
+<li>登录数据库，授权数据复制用户(IP 地址为从机 IP 地址，如双向主从，需授权本机 IP 地址，此时自己的 IP 地址就是从 IP 地址)</li>
+<li>备份数据库(记得加锁和解锁)</li>
+<li>传送备份数据到 Slave 上；</li>
+<li>启动数据库</li>
+</ul>
+</li>
+<li>Slave 配置<ul>
+<li>安装数据库</li>
+<li>修改数据库配置文件，指明 Server_id(如双向主从，也需开启二进制日志 <code>log-bin</code>)</li>
+<li>启动数据库，还原备份；</li>
+<li>查看当前是哪个日志，<code>Positiion</code> 号是多少(单向主从此步不需要，双向主从需要)</li>
+<li>指定 Master 地址、用户、密码等信息</li>
+<li>开户同步，查看状态</li>
+</ul>
+</li>
+</ul>
+<h3 id="实验操作"><a href="#实验操作" class="headerlink" title="实验操作"></a>实验操作</h3><ul>
+<li>Master IP：188.188.4.210</li>
+<li>Slave    IP：188.188.4.211</li>
+<li>MySQL 版本：MySQL 5.7.37</li>
+</ul>
+<h4 id="Master-配置"><a href="#Master-配置" class="headerlink" title="Master 配置"></a>Master 配置</h4><p>1）编辑主节点数据库配置文件</p>
+<p><strong>日志格式</strong>指二进制日志的三种格式</p>
+<ul>
+<li>binlog_format&#x3D;statement</li>
+<li>binlog_format&#x3D;rox</li>
+<li>binlog_format&#x3D;mixed</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim /usr/local/mysql/my.cnf          <span class="comment"># 一般默认为/etc/my.cnf，具体以实际环境为准</span></span><br><span class="line">[mysqld]</span><br><span class="line">lower_case_table_names=1               <span class="comment"># 表名不区分大小写</span></span><br><span class="line">binlog_format=MIXED                    <span class="comment"># 复制模式，日志格式</span></span><br><span class="line"></span><br><span class="line">server-id=1                            <span class="comment"># [必须]服务器唯一ID,默认是1，多主从时注意不可重复</span></span><br><span class="line">log-bin=mysql-bin                      <span class="comment"># 开启二进制日志，可指定存储位置，默认mysql目录</span></span><br><span class="line">log-bin-index=mysql-bin.index          <span class="comment"># 打开二进制日志文件索引</span></span><br><span class="line"></span><br><span class="line">//以下非必须项，仅供参考</span><br><span class="line">sync_binlog=1                          <span class="comment"># 控制数据库binlog刷到磁盘上，0不控制，性能最好，1每次事务提交都会刷到日志文件中，性能最差但最安全</span></span><br><span class="line">expire_logs_days=7                     <span class="comment"># 保留天数，以防日志占满磁盘，默认为0，表示不自动删除</span></span><br><span class="line"></span><br><span class="line">max_binlog_size=100m                   <span class="comment"># binlog每个日志文件大小</span></span><br><span class="line">binlog_cache_size=4m                   <span class="comment"># binlog缓存大小</span></span><br><span class="line">max_binlog_cache_size=512m             <span class="comment"># 最大binlog缓存大小</span></span><br><span class="line"></span><br><span class="line">binlog-do-db=repldb                    <span class="comment"># 需同步的二进制数据库名，可配置多个</span></span><br><span class="line">binlog-ignore-db=mysql                 <span class="comment"># 不同步的数据库，可配置多个</span></span><br><span class="line">binlog-ignore-db=information_schema    </span><br><span class="line">binlog-ignore-db=performation_schema</span><br><span class="line">binlog-ignore-db=sys</span><br><span class="line"></span><br><span class="line">auto-increment-offset=1                <span class="comment"># 表中自增字段每次的偏移量</span></span><br><span class="line">auto-increment-increment=1             <span class="comment"># 表中自增字段每次的自增量</span></span><br><span class="line">slave-skip-errors=all                  <span class="comment"># 跳过从库错误</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong>每次事务提交，MySQL 都会把 binlog 刷下去，是最安全的，但性能损耗最大。这样配置的话，在数据库所在的主机操作系统损坏或突然掉电的情况下，系统才有可能丢失 1 个事务的数据。binlog 是顺序 IO，虽然 sync_binlog&#x3D;1，多个事务同时提交，但同样很大影响MySQL 的 IO 性能，按需设置。</p>
+<p>2）重启加载配置，查看是否正常生成 <code>log-bin</code> 文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ systemctl restart mysql &amp;&amp; systemctl status mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启后，可在data目录下看到，配置文件中定义的log-bin=mysql-bin开头的文件</span></span><br><span class="line">$ ll ./data/</span><br><span class="line">total 123100</span><br><span class="line">-rw-r----- 1 mysql mysql       56 Apr 14 15:33 auto.cnf</span><br><span class="line">-rw------- 1 mysql mysql     1680 Apr 14 15:33 ca-key.pem</span><br><span class="line">-rw-r--r-- 1 mysql mysql     1112 Apr 14 15:33 ca.pem</span><br><span class="line">-rw-r--r-- 1 mysql mysql     1112 Apr 14 15:33 client-cert.pem</span><br><span class="line">-rw------- 1 mysql mysql     1680 Apr 14 15:33 client-key.pem</span><br><span class="line">-rw-r----- 1 mysql mysql      289 Apr 15 17:03 ib_buffer_pool</span><br><span class="line">-rw-r----- 1 mysql mysql 12582912 Apr 15 17:03 ibdata1</span><br><span class="line">-rw-r----- 1 mysql mysql 50331648 Apr 15 17:03 ib_logfile0</span><br><span class="line">-rw-r----- 1 mysql mysql 50331648 Apr 14 15:33 ib_logfile1</span><br><span class="line">-rw-r----- 1 mysql mysql 12582912 Apr 15 17:03 ibtmp1</span><br><span class="line">drwxr-x--- 2 mysql mysql     4096 Apr 14 15:33 mysql</span><br><span class="line">-rw-r----- 1 mysql mysql      177 Apr 15 16:59 mysql-bin.000001</span><br><span class="line">-rw-r----- 1 mysql mysql      177 Apr 15 17:01 mysql-bin.000002</span><br><span class="line">-rw-r----- 1 mysql mysql      177 Apr 15 17:03 mysql-bin.000003</span><br><span class="line">-rw-r----- 1 mysql mysql      154 Apr 15 17:03 mysql-bin.000004</span><br><span class="line">-rw-r----- 1 mysql mysql       76 Apr 15 17:03 mysql-bin.index</span><br></pre></td></tr></table></figure>
+
+<p>3）查看日志信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mysql -uroot -p</span><br><span class="line">Enter password: </span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 2</span><br><span class="line">Server version: 5.7.37-log Source distribution</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2022, Oracle and/or its affiliates.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"># 查看二进制日志是否开启</span><br><span class="line">mysql&gt; show global variables like &#x27;%log%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/image-20220415170520671.png" alt="image-20220415170520671"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 查看主节点二进制日志列表</span><br><span class="line">mysql&gt; SHOW MASTER LOGS;</span><br><span class="line">+------------------+-----------+</span><br><span class="line">| Log_name         | File_size |</span><br><span class="line">+------------------+-----------+</span><br><span class="line">| mysql-bin.000001 |       177 |</span><br><span class="line">| mysql-bin.000002 |       177 |</span><br><span class="line">| mysql-bin.000003 |       177 |</span><br><span class="line">| mysql-bin.000004 |       154 |</span><br><span class="line">+------------------+-----------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 查看主节点的 Server_id</span><br><span class="line">mysql&gt; SHOW GLOBAL VARIABLES LIKE &#x27;%server%&#x27;;</span><br><span class="line">+---------------------------------+--------------------------------------+</span><br><span class="line">| Variable_name                   | Value                                |</span><br><span class="line">+---------------------------------+--------------------------------------+</span><br><span class="line">| character_set_server            | utf8mb4                              |</span><br><span class="line">| collation_server                | utf8mb4_general_ci                   |</span><br><span class="line">| innodb_ft_server_stopword_table |                                      |</span><br><span class="line">| server_id                       | 1                                    |</span><br><span class="line">| server_id_bits                  | 32                                   |</span><br><span class="line">| server_uuid                     | 31a34ca9-bbc5-11ec-923c-000c29c2e995 |</span><br><span class="line">+---------------------------------+--------------------------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>4）在 Master 节点上创建复制权限的用户</p>
+<p><strong>授权用户 user 从哪台服务器 host 能够登录：主节点上创建用户–&gt;允许 188.188 网段的 IP，通过 slave 访问主节点</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; CREATE USER &#x27;slave&#x27;@&#x27;188.188.%.%&#x27; IDENTIFIED BY &#x27;slavepassword&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; grant replication slave on *.* to &#x27;slave&#x27;@&#x27;188.188.%.%&#x27; identified by &#x27;slavepassword&#x27;;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; flush privileges;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数说明</strong></p>
+<ol>
+<li><code>*.*</code> 指定能操作所有数据库和表</li>
+<li><code>slave</code> 创建的用户名</li>
+<li><code>188.188.%.%</code> 来源 ID，即从库 IP(可指定 IP)</li>
+<li><code>slavepassword</code> 用户密码</li>
+</ol>
+<p><font color=red>注意：如条件允许，为了数据同步一致，建议先锁定一下表</font></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; flush tables with read lock;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show master status;</span><br><span class="line">+------------------+----------+--------------+--------------------------------------------------+-------------------+</span><br><span class="line">| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB                                 | Executed_Gtid_Set |</span><br><span class="line">+------------------+----------+--------------+--------------------------------------------------+-------------------+</span><br><span class="line">| mysql-bin.000004 |      856 | repldb       | mysql,information_schema,performation_schema,sys |                   |</span><br><span class="line">+------------------+----------+--------------+--------------------------------------------------+-------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>File：当前记录 <code>bin-log</code> 的文件</li>
+<li>Position：从库读取的位置</li>
+<li>Binlog_Do_DB：需要同步的数据库</li>
+<li>Binlog_Ignore_DB：忽略的数据库，不同步</li>
+</ul>
+<p><font color=red><strong>查看 Master 主库状态，记录二进制文件名 (File) 和 位置 (Position)</strong></font>。至此，主库配置完成！</p>
+<p>5）备份主库，并传到从库</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mysqldump -uroot -p -A &gt; /tmp/all.sql</span><br><span class="line">$ <span class="built_in">ls</span> /tmp/</span><br><span class="line">all.sql</span><br><span class="line">$ scp /tmp/all.sql root@188.188.4.211:/tmp</span><br></pre></td></tr></table></figure>
+
+<h4 id="Slave-配置"><a href="#Slave-配置" class="headerlink" title="Slave 配置"></a>Slave 配置</h4><p>1）编辑从节点数据库配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line">lower_case_table_names=1               <span class="comment"># 表名不区分大小写</span></span><br><span class="line">server-id=2                            <span class="comment"># [必须]服务器唯一ID,默认是1，多主从时注意不可重复</span></span><br><span class="line"><span class="comment">#log-bin=mysql-bin                     # 开启二进制日志(从节点如后面无级联的从节点，可以不开，避免无谓资源消耗)</span></span><br><span class="line">relay-log=mysql-relay-log              <span class="comment"># 打开从服务器中继日志文件</span></span><br><span class="line">relay-log-index=mysql-relay-log.index  <span class="comment"># 打开从服务器中继日志文件索引</span></span><br></pre></td></tr></table></figure>
+
+<p>2）导入数据库数据，重启加载配置</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mysql -uroot -p &lt; /tmp/all.sql</span><br><span class="line">$ systemctl restart mysql &amp;&amp; systemctl status mysql</span><br></pre></td></tr></table></figure>
+
+<p>3）在从库进行，执行同步 SQL 语句</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql&gt; CHANGE MASTER TO </span><br><span class="line">    -&gt; MASTER_HOST=<span class="string">&#x27;188.188.4.210&#x27;</span>,           <span class="comment"># 主库IP地址</span></span><br><span class="line">    -&gt; MASTER_PORT=3306,                      <span class="comment"># 主库端口                   </span></span><br><span class="line">    -&gt; MASTER_USER=<span class="string">&#x27;slave&#x27;</span>,                   <span class="comment"># 主库用于复制的用户    </span></span><br><span class="line">    -&gt; MASTER_PASSWORD=<span class="string">&#x27;slavepassword&#x27;</span>,       <span class="comment"># 密码</span></span><br><span class="line">    -&gt; MASTER_LOG_FILE=<span class="string">&#x27;mysql-bin.000004&#x27;</span>,    <span class="comment"># 主库日志名</span></span><br><span class="line">    -&gt; MASTER_LOG_POS=856;                    <span class="comment"># 主库日志偏移量，即从何处开始复制</span></span><br><span class="line">Query OK, 0 rows affected, 2 warnings (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; CHANGE MASTER TO MASTER_HOST=<span class="string">&#x27;188.188.4.210&#x27;</span>,MASTER_PORT=3306,MASTER_USER=<span class="string">&#x27;slave&#x27;</span>,MASTER_PASSWORD=<span class="string">&#x27;slavepassword&#x27;</span>,MASTER_LOG_FILE=<span class="string">&#x27;mysql-bin.000004&#x27;</span>,MASTER_LOG_POS=856;</span><br></pre></td></tr></table></figure>
+
+<p>4）从库启动 slave 线程，并检查</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; start slave;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show slave status\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">               Slave_IO_State: Waiting for master to send event</span><br><span class="line">                  Master_Host: 188.188.4.210</span><br><span class="line">                  Master_User: slave</span><br><span class="line">                  Master_Port: 3306</span><br><span class="line">                Connect_Retry: 60</span><br><span class="line">              Master_Log_File: mysql-bin.000004</span><br><span class="line">          Read_Master_Log_Pos: 856</span><br><span class="line">               Relay_Log_File: mysql-relay-log.000002</span><br><span class="line">                Relay_Log_Pos: 320</span><br><span class="line">        Relay_Master_Log_File: mysql-bin.000004</span><br><span class="line">             Slave_IO_Running: Yes           # Slave这两项必须为Yes</span><br><span class="line">            Slave_SQL_Running: Yes</span><br><span class="line"></span><br><span class="line">mysql&gt; show processlist\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">     Id: 2</span><br><span class="line">   User: root</span><br><span class="line">   Host: localhost</span><br><span class="line">     db: NULL</span><br><span class="line">Command: Query</span><br><span class="line">   Time: 0</span><br><span class="line">  State: starting</span><br><span class="line">   Info: show processlist</span><br><span class="line">*************************** 2. row ***************************</span><br><span class="line">     Id: 3</span><br><span class="line">   User: system user</span><br><span class="line">   Host: </span><br><span class="line">     db: NULL</span><br><span class="line">Command: Connect</span><br><span class="line">   Time: 44</span><br><span class="line">  State: Waiting for master to send event</span><br><span class="line">   Info: NULL</span><br><span class="line">*************************** 3. row ***************************</span><br><span class="line">     Id: 4</span><br><span class="line">   User: system user</span><br><span class="line">   Host: </span><br><span class="line">     db: NULL</span><br><span class="line">Command: Connect</span><br><span class="line">   Time: 44</span><br><span class="line">  State: Slave has read all relay log; waiting for more updates</span><br><span class="line">   Info: NULL</span><br><span class="line">3 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>如出现问题，就先停止 Slave，查看日志并根据信息解决后再开启 Slave</p>
+<p><strong>注意：如果前面对 【主库】做了锁表操作，此时需要： 【 对 Master 解除 table（表）的锁定： “unlock tables;” 】</strong></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">YuiKuen.Yuen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://blog.yuikuen.top/2022/04/15/mysql/mysql配置_主从复制/">https://blog.yuikuen.top/2022/04/15/mysql/mysql配置_主从复制/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/mysql/">mysql</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/qq-s.png"><div class="post-qr-code__desc">支付宝打赏</div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wechat-s.png"><div class="post-qr-code__desc">微信打赏</div></div></div><div class="addthis_inline_share_toolbox pull-right"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-624e4db30419cf74" async></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/04/16/mysql/mysql%E9%85%8D%E7%BD%AE_%E4%BB%8E%E5%BA%93%E8%AE%BE%E7%BD%AE%E5%8F%AA%E8%AF%BB%E6%A8%A1%E5%BC%8F/"><i class="fa fa-chevron-left">  </i><span>mysql配置_从库设置只读模式</span></a></div><div class="next-post pull-right"><a href="/2022/04/14/nacos/cenots7%E9%83%A8%E7%BD%B2_Nacos%E9%9B%86%E7%BE%A4/"><span>CentOS7部署_Nacos集群</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = 'false' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'51vOu1zj5thMsDwfiYj0Gr34-gzGzoHsz',
+  appKey:'XPMz9Uun0aSLDkHrDVAlmy8Q',
+  placeholder:'Please enter your opinion',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/yuikuen/picgo-cdn_images/img/wallhaven-wqx3e7-tuya.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2021 - 2022 By YuiKuen.Yuen</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://blog.yuikuen.top/">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" data-click="true"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
